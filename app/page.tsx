@@ -10,7 +10,7 @@ export default function LandingPage() {
     <div className="min-h-screen bg-white">
       <Header />
       {/* Hero Section */}
-      <section className="relative bg-[#1d9b9a] py-20 lg:py-32 pt-32 lg:pt-40">
+      <section className="relative bg-[#1d9b9a] py-10 lg:py-16 pt-16 lg:pt-20">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div className="bg-white rounded-3xl p-8 lg:p-12 shadow-2xl">
@@ -36,13 +36,14 @@ export default function LandingPage() {
                 </Button>
               </div>
             </div>
-            <div className="relative">
+            <div className="relative flex items-end h-full" style={{minHeight: 0}}>
               <Image
-                src="/placeholder.svg?height=600&width=500&text=Palestrante"
+                src="/images/celso-capa.png"
                 alt="Celso Rocha de Abreu - Palestrante e criador do Método OOBA"
                 width={500}
                 height={600}
-                className="w-full h-auto object-cover bg-transparent"
+                className="w-full h-auto object-contain m-0 p-0"
+                priority
               />
             </div>
           </div>
@@ -50,12 +51,12 @@ export default function LandingPage() {
       </section>
 
       {/* Sobre o Método OOBA */}
-      <section className="py-20 lg:py-32">
+      <section className="py-10 lg:py-16 mt-0">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div className="relative">
               <Image
-                src="/placeholder.svg?height=500&width=600&text=Família+Conectada"
+                src="/images/metodo-ooba.jpg"
                 alt="Família conectada - Método OOBA"
                 width={600}
                 height={500}
@@ -151,7 +152,7 @@ export default function LandingPage() {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div className="relative">
               <Image
-                src="/placeholder.svg?height=400&width=600"
+                src="/images/palestra-celso.jpg"
                 alt="Celso Rocha palestrando"
                 width={600}
                 height={400}
@@ -215,7 +216,7 @@ export default function LandingPage() {
             <Card className="overflow-hidden border-0 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full">
               <div className="relative">
                 <Image
-                  src="/placeholder.svg?height=300&width=240"
+                  src="/images/capa-ooba.jpg"
                   alt="Capa do livro Método OOBA Para a Vida Toda"
                   width={240}
                   height={300}
