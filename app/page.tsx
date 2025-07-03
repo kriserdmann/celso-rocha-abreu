@@ -256,7 +256,7 @@ export default function LandingPage() {
             <Card className="overflow-hidden border-0 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full">
               <div className="relative">
                 <Image
-                  src="/placeholder.svg?height=300&width=240"
+                  src="/images/capa-paisefilhos.jpg"
                   alt="Capa do livro Pais e Filhos: Um Legado de Grandes Valores"
                   width={240}
                   height={300}
