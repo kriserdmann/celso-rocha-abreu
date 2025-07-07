@@ -50,7 +50,7 @@ export default function PaisEFilhosPage() {
             </div>
             <div className="relative">
               <Image
-                src="/placeholder.svg?height=600&width=400"
+                src="/images/pais-filhos-capa.jpg"
                 alt="Capa do livro Pais e Filhos: Um Legado de Grandes Valores"
                 width={400}
                 height={600}
@@ -88,7 +88,7 @@ export default function PaisEFilhosPage() {
             </div>
             <div className="relative">
               <Image
-                src="/placeholder.svg?height=400&width=500"
+                src="/images/pais-01.jpg"
                 alt="Pais enfrentando desafios na educação"
                 width={500}
                 height={400}
@@ -105,7 +105,7 @@ export default function PaisEFilhosPage() {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div className="relative lg:order-1">
               <Image
-                src="/placeholder.svg?height=400&width=500"
+                src="/images/pais-02.jpg"
                 alt="Família harmoniosa"
                 width={500}
                 height={400}
@@ -159,7 +159,7 @@ export default function PaisEFilhosPage() {
             </div>
             <div className="relative">
               <Image
-                src="/placeholder.svg?height=400&width=500"
+                src="/images/pais-03.jpg"
                 alt="Família com relacionamento distante"
                 width={500}
                 height={400}
@@ -176,7 +176,7 @@ export default function PaisEFilhosPage() {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div className="relative lg:order-1">
               <Image
-                src="/placeholder.svg?height=400&width=500"
+                src="/images/pais-04.jpg"
                 alt="Família conectada e feliz"
                 width={500}
                 height={400}

@@ -43,11 +43,11 @@ export default function MetodoOOBAPage() {
             </div>
             <div className="relative">
               <Image
-                src="/placeholder.svg?height=500&width=600"
+                src="/images/ooba-capa.jpg"
                 alt="Família aplicando o Método OOBA"
                 width={600}
                 height={500}
-                className="rounded-2xl shadow-2xl"
+                className="rounded-2xl shadow-2xl object-cover"
               />
             </div>
           </div>
@@ -112,7 +112,7 @@ export default function MetodoOOBAPage() {
 
             <div className="relative">
               <Image
-                src="/placeholder.svg?height=500&width=500"
+                src="/images/ooba-familia.jpg"
                 alt="Família feliz representando o método OOBA"
                 width={500}
                 height={500}
@@ -168,7 +168,7 @@ export default function MetodoOOBAPage() {
               </div>
               <div className="relative">
                 <Image
-                  src="/placeholder.svg?height=400&width=500"
+                  src="/images/ooba-amor.jpg"
                   alt="Amor com limites - família abraçada"
                   width={500}
                   height={400}
@@ -181,7 +181,7 @@ export default function MetodoOOBAPage() {
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
               <div className="relative lg:order-1">
                 <Image
-                  src="/placeholder.svg?height=400&width=500"
+                  src="/images/ooba-escuta.jpg"
                   alt="Escuta ativa - pai conversando com filho"
                   width={500}
                   height={400}
@@ -252,7 +252,7 @@ export default function MetodoOOBAPage() {
               </div>
               <div className="relative">
                 <Image
-                  src="/placeholder.svg?height=400&width=500"
+                  src="/images/ooba-escuta.jpg"
                   alt="Rotina familiar - família jantando junta"
                   width={500}
                   height={400}
@@ -265,7 +265,7 @@ export default function MetodoOOBAPage() {
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
               <div className="relative lg:order-1">
                 <Image
-                  src="/placeholder.svg?height=400&width=500"
+                  src="/images/ooba-tarefas.jpg"
                   alt="Participação familiar - família trabalhando junta"
                   width={500}
                   height={400}

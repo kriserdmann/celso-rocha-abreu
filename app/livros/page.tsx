@@ -46,7 +46,7 @@ export default function LivrosPage() {
             </div>
             <div className="relative">
               <Image
-                src="/placeholder.svg?height=500&width=600"
+                src="/images/livros.jpg"
                 alt="Coleção de livros de Celso Rocha"
                 width={600}
                 height={500}
@@ -120,7 +120,7 @@ export default function LivrosPage() {
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
               <div className="relative">
                 <Image
-                  src="/placeholder.svg?height=600&width=400"
+                  src="/images/ooba-livro.jpg"
                   alt="Capa do livro Método OOBA Para a Vida Toda"
                   width={400}
                   height={600}
@@ -192,7 +192,7 @@ export default function LivrosPage() {
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
               <div className="lg:order-2 relative">
                 <Image
-                  src="/placeholder.svg?height=600&width=400"
+                  src="/images/pais-filhos-capa.jpg"
                   alt="Capa do livro Pais e Filhos: Um Legado de Grandes Valores"
                   width={400}
                   height={600}
@@ -263,7 +263,7 @@ export default function LivrosPage() {
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
               <div className="relative">
                 <Image
-                  src="/placeholder.svg?height=600&width=400"
+                  src="/images/96poesia-capa.jpg"
                   alt="Capa do livro 96 Poesias"
                   width={400}
                   height={600}
@@ -335,7 +335,7 @@ export default function LivrosPage() {
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
               <div className="lg:order-2 relative">
                 <Image
-                  src="/placeholder.svg?height=600&width=400"
+                  src="/images/maravilhas-capa.jpg"
                   alt="Capa do livro As 8 Maravilhas Naturais de Schroeder em Poesia"
                   width={400}
                   height={600}

@@ -37,7 +37,7 @@ export default function QuemSouPage() {
             </div>
             <div className="relative">
               <Image
-                src="/placeholder.svg?height=600&width=500"
+                src="/images/palestra-celso.jpg"
                 alt="Celso Rocha de Abreu"
                 width={500}
                 height={600}
@@ -191,7 +191,7 @@ export default function QuemSouPage() {
 
             <div className="relative">
               <Image
-                src="/placeholder.svg?height=500&width=600"
+                src="/images/ooba-familia.jpg"
                 alt="Família unida representando valores"
                 width={600}
                 height={500}

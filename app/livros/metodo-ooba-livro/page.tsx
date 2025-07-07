@@ -64,7 +64,7 @@ export default function MetodoOOBALivroPage() {
             </div>
             <div className="relative">
               <Image
-                src="/placeholder.svg?height=600&width=400"
+                src="/images/ooba-livro.jpg"
                 alt="Capa do livro Método OOBA Para a Vida Toda"
                 width={400}
                 height={600}
@@ -180,7 +180,7 @@ export default function MetodoOOBALivroPage() {
               </div>
               <div className="relative">
                 <Image
-                  src="/placeholder.svg?height=400&width=500"
+                  src="/images/ooba-familia.jpg"
                   alt="Família demonstrando amor com limites"
                   width={500}
                   height={400}
@@ -193,7 +193,7 @@ export default function MetodoOOBALivroPage() {
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
               <div className="relative lg:order-1">
                 <Image
-                  src="/placeholder.svg?height=400&width=500"
+                  src="/images/ooba-escuta.jpg"
                   alt="Família praticando escuta ativa"
                   width={500}
                   height={400}
@@ -270,7 +270,7 @@ export default function MetodoOOBALivroPage() {
               </div>
               <div className="relative">
                 <Image
-                  src="/placeholder.svg?height=400&width=500"
+                  src="/images/ooba-rotina.jpg"
                   alt="Família em rotina com propósito"
                   width={500}
                   height={400}
@@ -283,7 +283,7 @@ export default function MetodoOOBALivroPage() {
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
               <div className="relative lg:order-1">
                 <Image
-                  src="/placeholder.svg?height=400&width=500"
+                  src="/images/ooba-tarefas.jpg"
                   alt="Família participando juntos"
                   width={500}
                   height={400}
@@ -569,7 +569,7 @@ export default function MetodoOOBALivroPage() {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div className="relative">
               <Image
-                src="/placeholder.svg?height=500&width=400"
+                src="/images/palestra-celso.jpg"
                 alt="Celso Rocha de Abreu com sua família"
                 width={400}
                 height={500}

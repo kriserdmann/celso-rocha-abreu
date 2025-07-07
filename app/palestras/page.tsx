@@ -43,7 +43,7 @@ export default function PalestrasPage() {
             </div>
             <div className="relative">
               <Image
-                src="/placeholder.svg?height=500&width=600"
+                src="/images/palestra-celso.jpg"
                 alt="Celso Rocha palestrando para uma audiência"
                 width={600}
                 height={500}

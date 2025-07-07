@@ -105,7 +105,7 @@ export default function ContatoPage() {
             </div>
             <div className="relative">
               <Image
-                src="/placeholder.svg?height=500&width=600"
+                src="/images/contato-celso.jpg"
                 alt="Celso Rocha em seu escritório"
                 width={600}
                 height={500}
