@@ -1,6 +1,8 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Heart, Ear, Clock, Users, Star, BookOpen, Mic, ShoppingCart } from "lucide-react"
+import { Heart, Ear, Clock, Users, Star, BookOpen, Mic, ShoppingCart } from "@/components/icons"
 import Image from "next/image"
 import { Header } from "@/components/header"
 import Link from "next/link"
@@ -75,8 +77,8 @@ export default function LandingPage() {
                   <Heart className="w-8 h-8 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-lg text-gray-900">Conexão Verdadeira</h3>
-                  <p className="text-gray-600">Baseado em anos de pesquisa e experiência prática</p>
+                  <h3 className="font-semibold text-lg text-gray-900">Conexão Absoluta</h3>
+                  <p className="text-gray-600">Baseado em anos de pesquisa, depoimentos, escuta e observação,  compilando com exemplos de êxito e aplicando na própria família, bem como em centenas de outras famílias que vivenciaram esta plena harmonia.</p>
                 </div>
               </div>
             </div>
@@ -88,7 +90,7 @@ export default function LandingPage() {
       <section className="py-20 lg:py-32 bg-gray-50">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Os 4 Pilares do OOBA</h2>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Os 4 Atos do OOBA</h2>
             <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
               Fundamentos essenciais para construir relacionamentos familiares sólidos e duradouros
             </p>
@@ -100,9 +102,9 @@ export default function LandingPage() {
                 <div className="w-20 h-20 bg-[#1d9b9a] rounded-full flex items-center justify-center mx-auto mb-6">
                   <Heart className="w-10 h-10 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Amor com Limites</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Olhar</h3>
                 <p className="text-gray-600">
-                  Equilibrio perfeito entre afeto incondicional e diretrizes claras para o crescimento saudável.
+                  Desenvolver a habilidade de enxergar além do que os olhos veem. Colocar em prática seu poder de pai e mãe sobre as atitudes, sentimentos e emoções. 
                 </p>
               </CardContent>
             </Card>
@@ -112,9 +114,9 @@ export default function LandingPage() {
                 <div className="w-20 h-20 bg-[#ff6b6b] rounded-full flex items-center justify-center mx-auto mb-6">
                   <Ear className="w-10 h-10 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Escuta Ativa</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Ouvir</h3>
                 <p className="text-gray-600">
-                  Técnicas para ouvir verdadeiramente seus filhos, validando sentimentos e fortalecendo a confiança.
+                  Ativar as Técnicas para ouvir verdadeiramente seus filhos, validando sentimentos e fortalecendo a confiança. 
                 </p>
               </CardContent>
             </Card>
@@ -124,9 +126,9 @@ export default function LandingPage() {
                 <div className="w-20 h-20 bg-[#1d9b9a] rounded-full flex items-center justify-center mx-auto mb-6">
                   <Clock className="w-10 h-10 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Rotina com Propósito</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Bendizer</h3>
                 <p className="text-gray-600">
-                  Estruturas diárias que criam segurança emocional e momentos especiais de conexão familiar.
+                  Saber como utilizar esta poderosa ferramenta para construir as capacidades dos seus filhos, na medida e momento certo, sem ferir seu inconsciente. 
                 </p>
               </CardContent>
             </Card>
@@ -136,9 +138,9 @@ export default function LandingPage() {
                 <div className="w-20 h-20 bg-[#ff6b6b] rounded-full flex items-center justify-center mx-auto mb-6">
                   <Users className="w-10 h-10 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Participação</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Abraçar</h3>
                 <p className="text-gray-600">
-                  Envolvimento ativo de todos os membros da família na construção de um ambiente harmonioso.
+                  Envolvolvimento ativo de todos os membros da família na construção da convivência harmoniosa.
                 </p>
               </CardContent>
             </Card>
@@ -166,9 +168,7 @@ export default function LandingPage() {
               </div>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Inspire sua comunidade</h2>
               <p className="text-lg md:text-xl text-gray-600 leading-relaxed mb-8">
-                As palestras de Celso Rocha de Abreu já impactaram milhares de famílias em todo o Brasil. Com uma
-                abordagem calorosa e prática, ele compartilha ferramentas concretas para transformar relacionamentos
-                familiares e criar legados de amor duradouros.
+                As palestras de Celso e Diana Abreu já impactaram milhares de famílias no Sul brasileiro.  Com uma abordagem prática, calorosa e leve, onde compartilham as ferramentas concretas para transformar os relacionamentos familiares, criando legados do verdadeiro amor.
               </p>
               <div className="space-y-4 mb-8">
                 <div className="flex items-center gap-3">

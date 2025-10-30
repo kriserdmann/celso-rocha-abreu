@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Heart, Ear, Clock, Users, Star, CheckCircle, ArrowRight, Target, Lightbulb } from "lucide-react"
+import { Heart, Ear, Clock, Users, Star, CheckCircle, ArrowRight, Target, Lightbulb } from "@/components/icons"
 import Image from "next/image"
 import { Header } from "@/components/header"
 
@@ -22,8 +22,7 @@ export default function MetodoOOBAPage() {
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">O Método OOBA</h1>
               <p className="text-xl md:text-2xl mb-8 opacity-90 leading-relaxed">
-                Uma abordagem transformadora que fortalece vínculos familiares através de quatro pilares fundamentais:
-                amor, comunicação, estrutura e participação.
+                Uma abordagem transformadora que fortale vínculos familiares através de quatro atos fundamentais: olhar, ouvir, bendizer e abraçar.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button
@@ -127,10 +126,9 @@ export default function MetodoOOBAPage() {
       <section className="py-20 lg:py-32 bg-gray-50">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Os 4 Pilares do OOBA</h2>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Os 4 atos do método OOBA </h2>
             <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
-              Cada pilar representa um aspecto fundamental para construir relacionamentos familiares sólidos e
-              duradouros
+              Cada ato representa uma virtude fundamental para construir relacionamentos familiares sólidos e duradouros.
             </p>
           </div>
 
@@ -143,18 +141,17 @@ export default function MetodoOOBAPage() {
                     <Heart className="w-8 h-8 text-white" />
                   </div>
                   <div>
-                    <span className="text-[#1d9b9a] font-semibold text-lg">1º Pilar</span>
-                    <h3 className="text-2xl md:text-3xl font-bold text-gray-900">Amor com Limites</h3>
+                    <span className="text-[#1d9b9a] font-semibold text-lg">Primeiro ato</span>
+                    <h3 className="text-2xl md:text-3xl font-bold text-gray-900">Mais que olhar</h3>
                   </div>
                 </div>
                 <p className="text-lg text-gray-600 leading-relaxed mb-6">
-                  O amor incondicional não significa ausência de limites. Este pilar ensina como demonstrar afeto
-                  genuíno enquanto estabelece diretrizes claras que promovem crescimento saudável e segurança emocional.
+                  O amor incondicional vai além do seu campo de visão,  enxerga o oculto, o que apenas pais bem sintonizados conseguem ver com clareza cada movimento que roda a atmosfera familiar. E posta-se em proteção e segurança religiosa, sentimental, emocional e  fisica de seus filhos.
                 </p>
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
                     <CheckCircle className="w-5 h-5 text-[#1d9b9a]" />
-                    <span className="text-gray-700">Estabelecimento de regras com amor</span>
+                    <span className="text-gray-700">Estabelecendo regras e limites ternos.</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <CheckCircle className="w-5 h-5 text-[#1d9b9a]" />
@@ -162,7 +159,7 @@ export default function MetodoOOBAPage() {
                   </div>
                   <div className="flex items-center gap-3">
                     <CheckCircle className="w-5 h-5 text-[#1d9b9a]" />
-                    <span className="text-gray-700">Consistência nas decisões familiares</span>
+                    <span className="text-gray-700">Ampla visão sobre as decisões familiares.</span>
                   </div>
                 </div>
               </div>

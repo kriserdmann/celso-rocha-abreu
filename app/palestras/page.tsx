@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Mic, Users, Clock, MapPin, Video, Star, CheckCircle, Calendar, Award, Target, Heart } from "lucide-react"
+import { Mic, Users, Clock, MapPin, Video, Star, CheckCircle, Calendar, Award, Target, Heart } from "@/components/icons"
 import Image from "next/image"
 import { Header } from "@/components/header"
 

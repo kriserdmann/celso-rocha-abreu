@@ -19,7 +19,7 @@ import {
   Mic,
   BookOpen,
   Users,
-} from "lucide-react"
+} from "@/components/icons"
 import Image from "next/image"
 import { Header } from "@/components/header"
 

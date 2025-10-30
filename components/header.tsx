@@ -1,8 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Menu, X } from "lucide-react"
 import Link from "next/link"
 
 export function Header() {
@@ -51,9 +49,9 @@ export function Header() {
 
           {/* CTA Button Desktop */}
           <div className="hidden lg:block">
-            <Button className="bg-[#1d9b9a] hover:bg-[#16807f] text-white px-6 py-2 rounded-full font-semibold" asChild>
-              <Link href="/agendar-palestra">Agendar Palestra</Link>
-            </Button>
+            <Link href="/agendar-palestra" className="bg-[#1d9b9a] hover:bg-[#16807f] text-white px-6 py-2 rounded-full font-semibold inline-block">
+              Agendar Palestra
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -62,8 +60,9 @@ export function Header() {
             className="lg:hidden p-2 text-gray-700 hover:text-[#1d9b9a] transition-colors"
             aria-label="Toggle menu"
           >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+            <span className="text-sm font-medium">{isMenuOpen ? "Close" : "Menu"}</span>
+          </button
+          >
         </div>
 
         {/* Mobile Navigation */}
@@ -81,13 +80,13 @@ export function Header() {
                 </Link>
               ))}
               <div className="pt-4 border-t border-gray-100">
-                <Button
-                  className="w-full bg-[#1d9b9a] hover:bg-[#16807f] text-white py-2 rounded-full font-semibold"
+                <Link
+                  href="/agendar-palestra"
+                  className="w-full block text-center bg-[#1d9b9a] hover:bg-[#16807f] text-white py-2 rounded-full font-semibold"
                   onClick={() => setIsMenuOpen(false)}
-                  asChild
                 >
-                  <Link href="/agendar-palestra">Agendar Palestra</Link>
-                </Button>
+                  Agendar Palestra
+                </Link>
               </div>
             </nav>
           </div>

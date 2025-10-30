@@ -13,7 +13,7 @@ import {
   Ear,
   BookOpen,
   Download,
-} from "lucide-react"
+} from "@/components/icons"
 import Image from "next/image"
 import { Header } from "@/components/header"
 

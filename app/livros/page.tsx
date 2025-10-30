@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { BookOpen, Star, ShoppingCart, Heart, Users, Feather, Mountain } from "lucide-react"
+import { BookOpen, Star, ShoppingCart, Heart, Users, Feather, Mountain } from "@/components/icons"
 import Image from "next/image"
 import { Header } from "@/components/header"
 import Link from "next/link"

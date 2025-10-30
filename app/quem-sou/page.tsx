@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Heart, BookOpen, Mic, Users, Award, Clock } from "lucide-react"
+import { Heart, BookOpen, Mic, Users, Award, Clock } from "@/components/icons"
 import Image from "next/image"
 import { Header } from "@/components/header"
 
@@ -16,8 +16,7 @@ export default function QuemSouPage() {
             <div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">Celso Rocha de Abreu</h1>
               <p className="text-xl md:text-2xl mb-8 opacity-90 leading-relaxed">
-                Escritor, palestrante e educador familiar dedicado a transformar relacionamentos e fortalecer vínculos
-                familiares através do amor e da compreensão.
+                Cristão, esposo, pai, escritor, palestrante e educador familiar,  dedicado a transformar relacionamentos e fortalecer os vínculos familiares através do amor e da compreensão.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button
@@ -63,22 +62,19 @@ export default function QuemSouPage() {
             <div className="space-y-8">
               <div className="prose prose-lg max-w-none">
                 <p className="text-lg text-gray-600 leading-relaxed mb-6">
-                  Minha jornada como educador familiar começou de forma muito pessoal. Como pai, enfrentei os mesmos
-                  desafios que milhares de famílias enfrentam diariamente: como equilibrar amor e disciplina, como se
-                  comunicar verdadeiramente com os filhos, e como criar um ambiente familiar que nutra o crescimento
-                  emocional e moral de cada membro.
+                  Minha jornada como educador familiar começou de forma muito pessoal.  Como esposo e pai, enfrentei os mesmos desafios que milhares de famílias enfrentam diariamente: como equilibrar necessidades, sentimentos e emoções, como me comunicar integralmente com minha família, em especial com nossos filhos e sobretudo criar um ambiente familiar que nutrisse o crescimento saudável desenvolvendo suas potências. 
                 </p>
 
                 <p className="text-lg text-gray-600 leading-relaxed mb-6">
-                  Foi através dessas experiências, combinadas com anos de estudo e pesquisa, que nasceu o Método OOBA.
-                  Não se trata apenas de teoria acadêmica, mas de ferramentas práticas testadas no dia a dia, na
-                  realidade das famílias brasileiras.
+                  Foi através dessas experiências combinadas com orações, anos de estudo e pesquisa, que nasceu o método OOBA. 
                 </p>
 
                 <p className="text-lg text-gray-600 leading-relaxed mb-8">
-                  Hoje, após mais de 15 anos dedicados a esta missão, tenho o privilégio de ver famílias inteiras se
-                  transformarem. Cada palestra, cada livro, cada conversa é uma oportunidade de plantar sementes de
-                  amor, compreensão e conexão verdadeira.
+                  Não se trata apenas de teoria acadêmica,  mas de ferramentas práticas testadas no dia a dia, na realidade das famílias brasileiras. 
+                </p>
+
+                <p className="text-lg text-gray-600 leading-relaxed mb-8">
+                  Hoje,  após mais de 30 anos dedicados a esta missão,  tenho o privilégio de ver famílias inteiras usufruindo das transformações propostas. Cada palestra, cada livro, cada conversa é uma oportunidade de plantar sementes de fé, esperança e amor. 
                 </p>
               </div>
             </div>
@@ -112,7 +108,7 @@ export default function QuemSouPage() {
                 <div className="w-16 h-16 bg-[#ff6b6b] rounded-full flex items-center justify-center mx-auto mb-4">
                   <BookOpen className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-3xl font-bold text-gray-900 mb-2">2</h3>
+                <h3 className="text-3xl font-bold text-gray-900 mb-2">4</h3>
                 <p className="text-gray-600">Livros Publicados</p>
               </CardContent>
             </Card>
@@ -122,7 +118,7 @@ export default function QuemSouPage() {
                 <div className="w-16 h-16 bg-[#1d9b9a] rounded-full flex items-center justify-center mx-auto mb-4">
                   <Users className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-3xl font-bold text-gray-900 mb-2">10.000+</h3>
+                <h3 className="text-3xl font-bold text-gray-900 mb-2">3.000+</h3>
                 <p className="text-gray-600">Famílias Impactadas</p>
               </CardContent>
             </Card>
@@ -132,7 +128,7 @@ export default function QuemSouPage() {
                 <div className="w-16 h-16 bg-[#ff6b6b] rounded-full flex items-center justify-center mx-auto mb-4">
                   <Clock className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-3xl font-bold text-gray-900 mb-2">15+</h3>
+                <h3 className="text-3xl font-bold text-gray-900 mb-2">30+</h3>
                 <p className="text-gray-600">Anos de Experiência</p>
               </CardContent>
             </Card>
@@ -221,13 +217,12 @@ export default function QuemSouPage() {
                     <div>
                       <h3 className="text-xl font-bold text-gray-900 mb-3">Educação e Desenvolvimento Familiar</h3>
                       <p className="text-gray-600 leading-relaxed mb-4">
-                        Formação especializada em psicologia familiar e desenvolvimento humano, com foco em dinâmicas
-                        familiares e comunicação interpessoal.
+                        Formação em Teologia Católica e desenvolvimento em Bioética, com foco em desenvolvimento familiar e comunicação interpessoal. 
                       </p>
                       <ul className="text-gray-600 space-y-2">
-                        <li>• Especialização em Terapia Familiar Sistêmica</li>
-                        <li>• Certificação em Comunicação Não-Violenta</li>
-                        <li>• Formação em Coaching Familiar</li>
+                        <li>• Especialização Católica em Terapia de Casais e Familiar</li>
+                        <li>• Certificação em comunicação assertiva e não violenta</li>
+                        <li>• Formador na Escola de Pais</li>
                       </ul>
                     </div>
                   </div>
@@ -242,14 +237,11 @@ export default function QuemSouPage() {
                     </div>
                     <div>
                       <h3 className="text-xl font-bold text-gray-900 mb-3">Experiência como Palestrante</h3>
-                      <p className="text-gray-600 leading-relaxed mb-4">
-                        Mais de uma década compartilhando conhecimento em escolas, empresas, igrejas e eventos
-                        familiares por todo o Brasil.
-                      </p>
+
                       <ul className="text-gray-600 space-y-2">
-                        <li>• Palestrante em mais de 200 instituições de ensino</li>
-                        <li>• Consultor familiar para empresas</li>
-                        <li>• Participação em programas de TV e rádio</li>
+                        <li>• Palestrante em mais de 200 instituições de ensino, religiosa e corporativa. </li>
+                        <li>• Consultor familiar para empresas,  comunidades e rede de proteção </li>
+                        <li>• Participação em rádios, programas, colegiados, seminários, debates sociais.</li>
                       </ul>
                     </div>
                   </div>
