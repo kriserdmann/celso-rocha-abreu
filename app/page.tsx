@@ -8,6 +8,8 @@ import { Header } from "@/components/header"
 import Link from "next/link"
 import { createClient } from "@/lib/supabase/client"
 import { useEffect, useState } from "react"
+import { useCart } from "@/context/cart-context"
+import { useRouter } from "next/navigation"
 
 interface Book {
   id: string
@@ -25,6 +27,8 @@ export default function LandingPage() {
   const [books, setBooks] = useState<Book[]>([])
   const [loading, setLoading] = useState(true)
   const supabase = createClient()
+  const router = useRouter()
+  const { addItem } = useCart()
 
   useEffect(() => {
     async function fetchBooks() {
@@ -304,7 +308,19 @@ export default function LandingPage() {
                       <Button className="w-full bg-[#1d9b9a] hover:bg-[#16807f] rounded-full text-sm" asChild>
                         <Link href={`/livros/${book.id}`}>Ver detalhes</Link>
                       </Button>
-                      <Button variant="outline" className="w-full rounded-full text-sm bg-transparent">
+                      <Button
+                        variant="outline"
+                        className="w-full rounded-full text-sm bg-transparent"
+                        onClick={() => {
+                          addItem({
+                            id: book.id,
+                            title: book.title,
+                            price: book.price,
+                            imageUrl: book.imageUrl
+                          })
+                          router.push('/checkout')
+                        }}
+                      >
                         <ShoppingCart className="w-4 h-4 mr-2" />
                         R$ {book.price.toFixed(2)}
                       </Button>
