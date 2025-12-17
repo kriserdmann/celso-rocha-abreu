@@ -122,7 +122,7 @@ export default function MetodoOOBAPage() {
         </div>
       </section>
 
-      {/* Os 4 Pilares Detalhados */}
+      {/* Os 4 Atos Detalhados */}
       <section className="py-20 lg:py-32 bg-gray-50">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-16">
@@ -133,7 +133,7 @@ export default function MetodoOOBAPage() {
           </div>
 
           <div className="space-y-16">
-            {/* Pilar 1: Amor com Limites */}
+            {/* Ato 1: Amor com Limites */}
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
               <div>
                 <div className="flex items-center gap-4 mb-6">
@@ -165,7 +165,7 @@ export default function MetodoOOBAPage() {
               </div>
               <div className="relative">
                 <Image
-                  src="/images/ooba-amor.jpg"
+                  src="/images/1-olhar.jpeg"
                   alt="Amor com limites - família abraçada"
                   width={500}
                   height={400}
@@ -174,11 +174,11 @@ export default function MetodoOOBAPage() {
               </div>
             </div>
 
-            {/* Pilar 2: Escuta Ativa */}
+            {/* Ato 2: Escuta Ativa */}
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
               <div className="relative lg:order-1">
                 <Image
-                  src="/images/ooba-escuta.jpg"
+                  src="/images/2ouvindo.jpg"
                   alt="Escuta ativa - pai conversando com filho"
                   width={500}
                   height={400}
@@ -191,7 +191,7 @@ export default function MetodoOOBAPage() {
                     <Ear className="w-8 h-8 text-white" />
                   </div>
                   <div>
-                    <span className="text-[#ff6b6b] font-semibold text-lg">2º Pilar</span>
+                    <span className="text-[#ff6b6b] font-semibold text-lg">Segundo Ato</span>
                     <h3 className="text-2xl md:text-3xl font-bold text-gray-900">Escuta Ativa</h3>
                   </div>
                 </div>
@@ -216,7 +216,7 @@ export default function MetodoOOBAPage() {
               </div>
             </div>
 
-            {/* Pilar 3: Rotina com Propósito */}
+            {/* Ato 3: Rotina com Propósito */}
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
               <div>
                 <div className="flex items-center gap-4 mb-6">
@@ -224,13 +224,14 @@ export default function MetodoOOBAPage() {
                     <Clock className="w-8 h-8 text-white" />
                   </div>
                   <div>
-                    <span className="text-[#1d9b9a] font-semibold text-lg">3º Pilar</span>
-                    <h3 className="text-2xl md:text-3xl font-bold text-gray-900">Rotina com Propósito</h3>
+                    <span className="text-[#1d9b9a] font-semibold text-lg">Terceiro Ato</span>
+                    <h3 className="text-2xl md:text-3xl font-bold text-gray-900">Mais que falar</h3>
                   </div>
                 </div>
                 <p className="text-lg text-gray-600 leading-relaxed mb-6">
-                  Estruturas diárias intencionais que criam segurança emocional e oportunidades regulares de conexão
-                  familiar, transformando momentos cotidianos em memórias afetivas duradouras.
+                  Verdadeiramente bendizer, prospectar e profetizar com falas, mensagens, conselhos, correções e
+                  alinhamentos diários com intencionalidade que criam segurança emocional e geram oportunidades de conexão familiar,
+                  transformando momentos cotidianos em memórias afetivas que eternizam.
                 </p>
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
@@ -249,7 +250,7 @@ export default function MetodoOOBAPage() {
               </div>
               <div className="relative">
                 <Image
-                  src="/images/ooba-escuta.jpg"
+                  src="/images/3bendizendo.jpg"
                   alt="Rotina familiar - família jantando junta"
                   width={500}
                   height={400}
@@ -258,7 +259,7 @@ export default function MetodoOOBAPage() {
               </div>
             </div>
 
-            {/* Pilar 4: Participação */}
+            {/* Ato 4: Participação */}
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
               <div className="relative lg:order-1">
                 <Image
@@ -275,26 +276,27 @@ export default function MetodoOOBAPage() {
                     <Users className="w-8 h-8 text-white" />
                   </div>
                   <div>
-                    <span className="text-[#ff6b6b] font-semibold text-lg">4º Pilar</span>
-                    <h3 className="text-2xl md:text-3xl font-bold text-gray-900">Participação</h3>
+                    <span className="text-[#ff6b6b] font-semibold text-lg">Quarto Ato</span>
+                    <h3 className="text-2xl md:text-3xl font-bold text-gray-900">Mais que abraçar</h3>
                   </div>
                 </div>
                 <p className="text-lg text-gray-600 leading-relaxed mb-6">
-                  O envolvimento ativo de todos os membros da família na construção de um ambiente harmonioso, onde cada
-                  pessoa tem voz, responsabilidades e contribui para o bem-estar coletivo.
+                  A participação ativa, envolve todos os membros da família num abraço que constrói um ambiente harmonioso,
+                  onde cada pessoa tem voz, responsabilidade e consciência de pertencimento do núcleo familiar,
+                  onde apoia e é apoiado em seus sonhos, desejos e obrigações.
                 </p>
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
                     <CheckCircle className="w-5 h-5 text-[#ff6b6b]" />
-                    <span className="text-gray-700">Responsabilidades compartilhadas</span>
+                    <span className="text-gray-700">Responsabilidade compartilhada</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <CheckCircle className="w-5 h-5 text-[#ff6b6b]" />
-                    <span className="text-gray-700">Decisões familiares colaborativas</span>
+                    <span className="text-gray-700">Decisão familiar colaborativa</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <CheckCircle className="w-5 h-5 text-[#ff6b6b]" />
-                    <span className="text-gray-700">Senso de pertencimento e propósito</span>
+                    <span className="text-gray-700">Definição de propósito coletivo</span>
                   </div>
                 </div>
               </div>
@@ -337,7 +339,7 @@ export default function MetodoOOBAPage() {
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4">Implementação Gradual</h3>
                 <p className="text-gray-600 leading-relaxed">
-                  Aplicação progressiva dos 4 pilares, com acompanhamento e ajustes personalizados para cada realidade
+                  Aplicação progressiva dos 4 atos, com acompanhamento e ajustes personalizados para cada realidade
                   familiar.
                 </p>
               </CardContent>
@@ -459,7 +461,7 @@ export default function MetodoOOBAPage() {
                   ))}
                 </div>
                 <p className="text-gray-600 mb-6 italic leading-relaxed text-lg">
-                  "O Método OOBA salvou nossa família. Meu filho adolescente estava se afastando, mas com os 4 pilares
+                  "O Método OOBA salvou nossa família. Meu filho adolescente estava se afastando, mas com os 4 atos
                   conseguimos reconstruir nossa conexão. Hoje ele me procura para conversar sobre tudo!"
                 </p>
                 <div>

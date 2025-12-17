@@ -1,3 +1,4 @@
+
 "use client"
 
 import type React from "react"
@@ -22,6 +23,8 @@ import {
 } from "@/components/icons"
 import Image from "next/image"
 import { Header } from "@/components/header"
+import { createClient } from "@/lib/supabase/client"
+import { toast } from "sonner"
 
 export default function ContatoPage() {
   const [formData, setFormData] = useState({
@@ -34,6 +37,7 @@ export default function ContatoPage() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const supabase = createClient()
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -47,24 +51,45 @@ export default function ContatoPage() {
     e.preventDefault()
     setIsSubmitting(true)
 
-    // Simular envio do formulário
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-
-    setIsSubmitting(false)
-    setIsSubmitted(true)
-
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false)
-      setFormData({
-        nome: "",
-        email: "",
-        telefone: "",
-        assunto: "",
-        tipo: "",
-        mensagem: "",
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.nome,
+          email: formData.email,
+          phone: formData.telefone,
+          subject: formData.assunto,
+          type: formData.tipo,
+          message: formData.mensagem,
+        }),
       })
-    }, 3000)
+
+      if (!response.ok) throw new Error('Erro ao enviar mensagem')
+
+      setIsSubmitted(true)
+      toast.success("Mensagem enviada com sucesso!")
+
+      // Reset form after 3 seconds
+      setTimeout(() => {
+        setIsSubmitted(false)
+        setFormData({
+          nome: "",
+          email: "",
+          telefone: "",
+          assunto: "",
+          tipo: "",
+          mensagem: "",
+        })
+      }, 3000)
+    } catch (error) {
+      console.error('Error submitting contact form:', error)
+      toast.error("Erro ao enviar mensagem. Tente novamente.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -134,7 +159,7 @@ export default function ContatoPage() {
                   <Phone className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4">Telefone</h3>
-                <p className="text-gray-600 mb-4">(47) 99999-9999</p>
+                <p className="text-gray-600 mb-4">(47) 98900-4121</p>
                 <Button size="sm" className="bg-[#1d9b9a] hover:bg-[#16807f] rounded-full">
                   Ligar Agora
                 </Button>
@@ -147,7 +172,7 @@ export default function ContatoPage() {
                   <MessageCircle className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4">WhatsApp</h3>
-                <p className="text-gray-600 mb-4">(47) 99999-9999</p>
+                <p className="text-gray-600 mb-4">(47) 98900-4121</p>
                 <Button size="sm" className="bg-[#ff6b6b] hover:bg-[#e55555] rounded-full">
                   Conversar
                 </Button>
@@ -160,7 +185,7 @@ export default function ContatoPage() {
                   <Mail className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4">E-mail</h3>
-                <p className="text-gray-600 mb-4">contato@celsorocha.com.br</p>
+                <p className="text-gray-600 mb-4">celsorochadeabreu@gmail.com</p>
                 <Button size="sm" className="bg-[#1d9b9a] hover:bg-[#16807f] rounded-full">
                   Enviar E-mail
                 </Button>
@@ -173,7 +198,7 @@ export default function ContatoPage() {
                   <MapPin className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4">Localização</h3>
-                <p className="text-gray-600 mb-4">Schroeder, Santa Catarina</p>
+                <p className="text-gray-600 mb-4">Rua Alberto Zanella, 2035 - Schroeder SC</p>
                 <Button size="sm" className="bg-[#ff6b6b] hover:bg-[#e55555] rounded-full">
                   Ver Mapa
                 </Button>

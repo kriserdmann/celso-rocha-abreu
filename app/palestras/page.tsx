@@ -1,10 +1,55 @@
+
+"use client"
+
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Mic, Users, Clock, MapPin, Video, Star, CheckCircle, Calendar, Award, Target, Heart } from "@/components/icons"
 import Image from "next/image"
 import { Header } from "@/components/header"
+import { createClient } from "@/lib/supabase/client"
+import Link from "next/link"
+
+interface Lecture {
+  id: string
+  title: string
+  description: string
+  duration: string
+  target_audience: string
+  topics: string[]
+  image_url: string
+  is_active: boolean
+}
 
 export default function PalestrasPage() {
+  const [lectures, setLectures] = useState<Lecture[]>([])
+  const [loading, setLoading] = useState(true)
+  const supabase = createClient()
+
+  useEffect(() => {
+    fetchLectures()
+  }, [])
+
+  const fetchLectures = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('lectures')
+        .select('*')
+        .eq('is_active', true)
+        .order('created_at', { ascending: false })
+
+      if (error) throw error
+
+      if (data) {
+        setLectures(data)
+      }
+    } catch (error) {
+      console.error('Error fetching lectures:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-white">
       <Header />
@@ -26,18 +71,23 @@ export default function PalestrasPage() {
                 adaptado para cada público.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button
-                  size="lg"
-                  className="bg-white text-[#1d9b9a] hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-full"
-                >
-                  Agendar Palestra
-                </Button>
+                <Link href="/agendar-palestra">
+                  <Button
+                    size="lg"
+                    className="bg-white text-[#1d9b9a] hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-full w-full sm:w-auto"
+                  >
+                    Agendar Palestra
+                  </Button>
+                </Link>
                 <Button
                   size="lg"
                   variant="outline"
                   className="border-white text-white hover:bg-white hover:text-[#1d9b9a] px-8 py-4 text-lg font-semibold rounded-full bg-transparent"
+                  onClick={() => {
+                    document.getElementById('temas')?.scrollIntoView({ behavior: 'smooth' })
+                  }}
                 >
-                  Ver Agenda
+                  Ver Temas
                 </Button>
               </div>
             </div>
@@ -71,7 +121,7 @@ export default function PalestrasPage() {
                 <div className="w-16 h-16 bg-[#1d9b9a] rounded-full flex items-center justify-center mx-auto mb-4">
                   <Mic className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-3xl font-bold text-gray-900 mb-2">500+</h3>
+                <h3 className="text-3xl font-bold text-gray-900 mb-2">200+</h3>
                 <p className="text-gray-600">Palestras Realizadas</p>
               </CardContent>
             </Card>
@@ -81,7 +131,7 @@ export default function PalestrasPage() {
                 <div className="w-16 h-16 bg-[#ff6b6b] rounded-full flex items-center justify-center mx-auto mb-4">
                   <Users className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-3xl font-bold text-gray-900 mb-2">50.000+</h3>
+                <h3 className="text-3xl font-bold text-gray-900 mb-2">20.000+</h3>
                 <p className="text-gray-600">Pessoas Impactadas</p>
               </CardContent>
             </Card>
@@ -91,7 +141,7 @@ export default function PalestrasPage() {
                 <div className="w-16 h-16 bg-[#1d9b9a] rounded-full flex items-center justify-center mx-auto mb-4">
                   <MapPin className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-3xl font-bold text-gray-900 mb-2">200+</h3>
+                <h3 className="text-3xl font-bold text-gray-900 mb-2">50+</h3>
                 <p className="text-gray-600">Cidades Visitadas</p>
               </CardContent>
             </Card>
@@ -101,7 +151,7 @@ export default function PalestrasPage() {
                 <div className="w-16 h-16 bg-[#ff6b6b] rounded-full flex items-center justify-center mx-auto mb-4">
                   <Award className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-3xl font-bold text-gray-900 mb-2">15+</h3>
+                <h3 className="text-3xl font-bold text-gray-900 mb-2">10+</h3>
                 <p className="text-gray-600">Anos de Experiência</p>
               </CardContent>
             </Card>
@@ -280,7 +330,7 @@ export default function PalestrasPage() {
       </section>
 
       {/* Temas Principais */}
-      <section className="py-20 lg:py-32">
+      <section id="temas" className="py-20 lg:py-32">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Temas Principais</h2>
@@ -289,89 +339,40 @@ export default function PalestrasPage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12 lg:gap-20 max-w-6xl mx-auto">
-            <div className="space-y-8">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-[#1d9b9a] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                  <Heart className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">"Pais e Filhos: Construindo Pontes de Amor"</h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    Como fortalecer vínculos familiares através da comunicação autêntica e do amor incondicional,
-                    criando memórias afetivas duradouras.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-[#ff6b6b] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                  <Users className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">"O Método OOBA na Prática"</h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    Apresentação detalhada dos 4 pilares do método com exemplos práticos e ferramentas para aplicação
-                    imediata no cotidiano familiar.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-[#1d9b9a] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                  <Target className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">"Educando com Propósito"</h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    Estratégias para transmitir valores sólidos e formar o caráter dos filhos, preparando-os para os
-                    desafios da vida.
-                  </p>
-                </div>
-              </div>
+          {loading ? (
+            <div className="flex justify-center items-center py-20">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#1d9b9a]"></div>
             </div>
-
-            <div className="space-y-8">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-[#ff6b6b] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                  <Clock className="w-6 h-6 text-white" />
+          ) : lectures.length > 0 ? (
+            <div className="grid md:grid-cols-2 gap-12 lg:gap-20 max-w-6xl mx-auto">
+              {lectures.map((lecture, index) => (
+                <div key={lecture.id} className="flex items-start gap-4">
+                  <div className={`w-12 h-12 ${index % 2 === 0 ? 'bg-[#1d9b9a]' : 'bg-[#ff6b6b]'} rounded-full flex items-center justify-center flex-shrink-0 mt-1`}>
+                    <Mic className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">{lecture.title}</h3>
+                    <p className="text-gray-600 leading-relaxed mb-4">
+                      {lecture.description}
+                    </p>
+                    {lecture.topics && lecture.topics.length > 0 && (
+                      <div className="flex flex-wrap gap-2">
+                        {lecture.topics.map((topic, i) => (
+                          <span key={i} className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
+                            {topic}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">"Tempo de Qualidade em Família"</h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    Como criar momentos significativos e estabelecer rotinas que fortalecem os laços familiares em meio
-                    à correria do dia a dia.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-[#1d9b9a] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                  <Mic className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">"Comunicação que Transforma"</h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    Técnicas de escuta ativa e comunicação não-violenta para resolver conflitos e fortalecer a confiança
-                    familiar.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-[#ff6b6b] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                  <Award className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">"Legado de Grandes Valores"</h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    Como construir um legado familiar baseado em princípios sólidos que transcendem gerações e
-                    transformam sociedades.
-                  </p>
-                </div>
-              </div>
+              ))}
             </div>
-          </div>
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-gray-500 text-lg">Nenhuma palestra encontrada no momento.</p>
+            </div>
+          )}
         </div>
       </section>
 
@@ -569,12 +570,14 @@ export default function PalestrasPage() {
             do poder dos relacionamentos familiares.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              size="lg"
-              className="bg-white text-[#1d9b9a] hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-full"
-            >
-              Solicitar Orçamento
-            </Button>
+            <Link href="/agendar-palestra">
+              <Button
+                size="lg"
+                className="bg-white text-[#1d9b9a] hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-full"
+              >
+                Solicitar Orçamento
+              </Button>
+            </Link>
             <Button
               size="lg"
               variant="outline"

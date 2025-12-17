@@ -1,3 +1,4 @@
+
 "use client"
 
 import type React from "react"
@@ -22,6 +23,8 @@ import {
 } from "lucide-react"
 import Image from "next/image"
 import { Header } from "@/components/header"
+import { createClient } from "@/lib/supabase/client"
+import { toast } from "sonner"
 
 export default function AgendarPalestraPage() {
   const [formData, setFormData] = useState({
@@ -48,6 +51,7 @@ export default function AgendarPalestraPage() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const supabase = createClient()
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -61,38 +65,77 @@ export default function AgendarPalestraPage() {
     e.preventDefault()
     setIsSubmitting(true)
 
-    // Simular envio do formulário
-    await new Promise((resolve) => setTimeout(resolve, 3000))
+    try {
+      const messageBody = `
+        Nome da Instituição: ${formData.nomeInstituicao}
+        Tipo de Instituição: ${formData.tipoInstituicao}
+        Cargo: ${formData.cargo}
+        Cidade/Estado: ${formData.cidade}/${formData.estado}
+        Data Preferencial: ${formData.dataPreferencial}
+        Data Alternativa: ${formData.dataAlternativa}
+        Horário Preferencial: ${formData.horarioPreferencial}
+        Duração Desejada: ${formData.duracaoDesejada}
+        Público Alvo: ${formData.publicoAlvo}
+        Número de Participantes: ${formData.numeroParticipantes}
+        Tema Preferido: ${formData.temaPreferido}
+        Formato da Palestra: ${formData.formatoPalestra}
+        Infraestrutura: ${formData.infraestrutura}
+        Orçamento: ${formData.orcamento}
+        Objetivos: ${formData.objetivos}
+        Informações Adicionais: ${formData.informacoesAdicionais}
+      `
 
-    setIsSubmitting(false)
-    setIsSubmitted(true)
+      const { error } = await supabase
+        .from('contacts')
+        .insert([
+          {
+            name: formData.nomeResponsavel,
+            email: formData.email,
+            phone: formData.telefone,
+            subject: `Solicitação de Palestra - ${formData.nomeInstituicao}`,
+            type: 'palestra',
+            message: messageBody,
+            status: 'new'
+          }
+        ])
 
-    // Reset form after 5 seconds
-    setTimeout(() => {
-      setIsSubmitted(false)
-      setFormData({
-        nomeResponsavel: "",
-        email: "",
-        telefone: "",
-        nomeInstituicao: "",
-        tipoInstituicao: "",
-        cargo: "",
-        cidade: "",
-        estado: "",
-        dataPreferencial: "",
-        dataAlternativa: "",
-        horarioPreferencial: "",
-        duracaoDesejada: "",
-        publicoAlvo: "",
-        numeroParticipantes: "",
-        temaPreferido: "",
-        formatoPalestra: "",
-        infraestrutura: "",
-        orcamento: "",
-        objetivos: "",
-        informacoesAdicionais: "",
-      })
-    }, 5000)
+      if (error) throw error
+
+      setIsSubmitted(true)
+      toast.success("Solicitação enviada com sucesso!")
+
+      // Reset form after 5 seconds
+      setTimeout(() => {
+        setIsSubmitted(false)
+        setFormData({
+          nomeResponsavel: "",
+          email: "",
+          telefone: "",
+          nomeInstituicao: "",
+          tipoInstituicao: "",
+          cargo: "",
+          cidade: "",
+          estado: "",
+          dataPreferencial: "",
+          dataAlternativa: "",
+          horarioPreferencial: "",
+          duracaoDesejada: "",
+          publicoAlvo: "",
+          numeroParticipantes: "",
+          temaPreferido: "",
+          formatoPalestra: "",
+          infraestrutura: "",
+          orcamento: "",
+          objetivos: "",
+          informacoesAdicionais: "",
+        })
+      }, 5000)
+    } catch (error) {
+      console.error('Error submitting lecture request:', error)
+      toast.error("Erro ao enviar solicitação. Tente novamente.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -798,138 +841,6 @@ export default function AgendarPalestraPage() {
                 </p>
               </CardContent>
             </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Depoimentos de Organizadores */}
-      <section className="py-20 lg:py-32 bg-gray-50">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-              O que dizem os organizadores
-            </h2>
-            <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
-              Feedback de quem já contratou as palestras do Celso Rocha
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <Card className="p-8 border-0 shadow-lg">
-              <CardContent className="p-0">
-                <div className="flex mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-                <p className="text-gray-600 mb-6 italic leading-relaxed">
-                  "A palestra do Celso foi o ponto alto do nosso evento. Mais de 800 pessoas emocionadas e
-                  transformadas. O processo de contratação foi muito profissional e o resultado superou nossas
-                  expectativas!"
-                </p>
-                <div>
-                  <p className="font-semibold text-gray-900">Marcos Oliveira</p>
-                  <p className="text-sm text-gray-500">Diretor de Escola, Salvador</p>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="p-8 border-0 shadow-lg">
-              <CardContent className="p-0">
-                <div className="flex mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-                <p className="text-gray-600 mb-6 italic leading-relaxed">
-                  "Excelente palestrante! Conseguiu adaptar perfeitamente o conteúdo para nossa empresa. Os
-                  colaboradores saíram motivados e com ferramentas práticas para aplicar em casa. Recomendo sem
-                  reservas!"
-                </p>
-                <div>
-                  <p className="font-semibold text-gray-900">Ana Beatriz Costa</p>
-                  <p className="text-sm text-gray-500">RH Corporativo, São Paulo</p>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="p-8 border-0 shadow-lg">
-              <CardContent className="p-0">
-                <div className="flex mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-                <p className="text-gray-600 mb-6 italic leading-relaxed">
-                  "Conteúdo profundo, apresentação envolvente e aplicação prática. Nossa igreja foi impactada de forma
-                  extraordinária. O Celso é um palestrante que realmente transforma vidas!"
-                </p>
-                <div>
-                  <p className="font-semibold text-gray-900">Pastor Roberto Silva</p>
-                  <p className="text-sm text-gray-500">Igreja Batista Central, Goiânia</p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Contato Direto */}
-      <section className="py-20 lg:py-32">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-                Prefere falar diretamente?
-              </h2>
-              <p className="text-lg md:text-xl text-gray-600">
-                Entre em contato pelos canais abaixo para um atendimento personalizado
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-8">
-              <Card className="p-8 border-0 shadow-lg text-center hover:shadow-xl transition-shadow">
-                <CardContent className="p-0">
-                  <div className="w-16 h-16 bg-[#25D366] rounded-full flex items-center justify-center mx-auto mb-6">
-                    <MessageCircle className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">WhatsApp</h3>
-                  <p className="text-gray-600 mb-6">Resposta rápida e atendimento personalizado</p>
-                  <Button className="bg-[#25D366] hover:bg-[#20BA5A] text-white rounded-full">
-                    <MessageCircle className="w-5 h-5 mr-2" />
-                    Chamar no WhatsApp
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="p-8 border-0 shadow-lg text-center hover:shadow-xl transition-shadow">
-                <CardContent className="p-0">
-                  <div className="w-16 h-16 bg-[#1d9b9a] rounded-full flex items-center justify-center mx-auto mb-6">
-                    <Phone className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">Telefone</h3>
-                  <p className="text-gray-600 mb-6">Conversa direta para esclarecimentos</p>
-                  <Button className="bg-[#1d9b9a] hover:bg-[#16807f] rounded-full">
-                    <Phone className="w-5 h-5 mr-2" />
-                    (47) 99999-9999
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="p-8 border-0 shadow-lg text-center hover:shadow-xl transition-shadow">
-                <CardContent className="p-0">
-                  <div className="w-16 h-16 bg-[#ff6b6b] rounded-full flex items-center justify-center mx-auto mb-6">
-                    <Mail className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">E-mail</h3>
-                  <p className="text-gray-600 mb-6">Para envio de materiais e propostas</p>
-                  <Button className="bg-[#ff6b6b] hover:bg-[#e55555] rounded-full">
-                    <Mail className="w-5 h-5 mr-2" />
-                    Enviar E-mail
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
           </div>
         </div>
       </section>

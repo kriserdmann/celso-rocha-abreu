@@ -6,8 +6,60 @@ import { Heart, Ear, Clock, Users, Star, BookOpen, Mic, ShoppingCart } from "@/c
 import Image from "next/image"
 import { Header } from "@/components/header"
 import Link from "next/link"
+import { createClient } from "@/lib/supabase/client"
+import { useEffect, useState } from "react"
+
+interface Book {
+  id: string
+  title: string
+  description: string
+  price: number
+  category: string
+  rating: number
+  imageUrl: string
+  features: string[]
+  sold: number
+}
 
 export default function LandingPage() {
+  const [books, setBooks] = useState<Book[]>([])
+  const [loading, setLoading] = useState(true)
+  const supabase = createClient()
+
+  useEffect(() => {
+    async function fetchBooks() {
+      try {
+        const { data, error } = await supabase
+          .from('books')
+          .select('*')
+          .eq('is_active', true)
+          .order('display_order', { ascending: true })
+          .limit(4)
+
+        if (error) throw error
+
+        if (data) {
+          setBooks(data.map((book: any) => ({
+            id: book.id,
+            title: book.title,
+            description: book.description || '',
+            price: book.price,
+            category: book.category || '',
+            rating: book.rating || 0,
+            imageUrl: book.image_url || '/images/placeholder-book.jpg',
+            features: book.features || [],
+            sold: book.sold
+          })))
+        }
+      } catch (error) {
+        console.error('Error fetching books:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchBooks()
+  }, [])
   return (
     <div className="min-h-screen bg-white">
       <Header />
@@ -38,7 +90,7 @@ export default function LandingPage() {
                 </Button>
               </div>
             </div>
-            <div className="relative flex items-end h-full" style={{minHeight: 0}}>
+            <div className="relative flex items-end h-full" style={{ minHeight: 0 }}>
               <Image
                 src="/images/celso-capa.png"
                 alt="Celso Rocha de Abreu - Palestrante e criador do Método OOBA"
@@ -104,7 +156,7 @@ export default function LandingPage() {
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4">Olhar</h3>
                 <p className="text-gray-600">
-                  Desenvolver a habilidade de enxergar além do que os olhos veem. Colocar em prática seu poder de pai e mãe sobre as atitudes, sentimentos e emoções. 
+                  Desenvolver a habilidade de enxergar além do que os olhos veem. Colocar em prática seu poder de pai e mãe sobre as atitudes, sentimentos e emoções.
                 </p>
               </CardContent>
             </Card>
@@ -116,7 +168,7 @@ export default function LandingPage() {
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4">Ouvir</h3>
                 <p className="text-gray-600">
-                  Ativar as Técnicas para ouvir verdadeiramente seus filhos, validando sentimentos e fortalecendo a confiança. 
+                  Ativar as Técnicas para ouvir verdadeiramente seus filhos, validando sentimentos e fortalecendo a confiança.
                 </p>
               </CardContent>
             </Card>
@@ -128,7 +180,7 @@ export default function LandingPage() {
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4">Bendizer</h3>
                 <p className="text-gray-600">
-                  Saber como utilizar esta poderosa ferramenta para construir as capacidades dos seus filhos, na medida e momento certo, sem ferir seu inconsciente. 
+                  Saber como utilizar esta poderosa ferramenta para construir as capacidades dos seus filhos, na medida e momento certo, sem ferir seu inconsciente.
                 </p>
               </CardContent>
             </Card>
@@ -212,160 +264,55 @@ export default function LandingPage() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Método OOBA Para a Vida Toda */}
-            <Card className="overflow-hidden border-0 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full">
-              <div className="relative">
-                <Image
-                  src="/images/capa-ooba.jpg"
-                  alt="Capa do livro Método OOBA Para a Vida Toda"
-                  width={240}
-                  height={300}
-                  className="w-full h-64 object-cover"
-                />
-                <div className="absolute top-3 right-3 bg-[#1d9b9a] text-white px-3 py-1 rounded-full text-xs font-semibold">
-                  Bestseller
-                </div>
+            {loading ? (
+              <div className="col-span-2 flex justify-center items-center h-64">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#1d9b9a]"></div>
               </div>
-              <CardContent className="p-6 flex flex-col flex-grow">
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Método OOBA Para a Vida Toda</h3>
-                <p className="text-gray-600 mb-4 leading-relaxed text-sm flex-grow">
-                  O guia definitivo para aplicar o Método OOBA em todas as fases da vida familiar. Ferramentas práticas
-                  e estratégias comprovadas.
-                </p>
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="flex">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                    ))}
+            ) : books.length === 0 ? (
+              <div className="col-span-2 text-center text-gray-500">Nenhum livro encontrado.</div>
+            ) : (
+              books.map((book) => (
+                <Card key={book.id} className="overflow-hidden border-0 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full">
+                  <div className="relative">
+                    <Image
+                      src={book.imageUrl}
+                      alt={`Capa do livro ${book.title}`}
+                      width={240}
+                      height={300}
+                      className="w-full h-64 object-cover"
+                    />
+                    {book.category && (
+                      <div className="absolute top-3 right-3 bg-[#1d9b9a] text-white px-3 py-1 rounded-full text-xs font-semibold">
+                        {book.category}
+                      </div>
+                    )}
                   </div>
-                  <span className="text-xs text-gray-500">4.9/5</span>
-                </div>
-                <div className="space-y-2 mt-auto">
-                  <Button className="w-full bg-[#1d9b9a] hover:bg-[#16807f] rounded-full text-sm" asChild>
-                    <Link href="/livros/metodo-ooba-livro">Ver detalhes</Link>
-                  </Button>
-                  <Button variant="outline" className="w-full rounded-full text-sm bg-transparent">
-                    <ShoppingCart className="w-4 h-4 mr-2" />
-                    R$ 69,90
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Pais e Filhos: Um Legado de Grandes Valores */}
-            <Card className="overflow-hidden border-0 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full">
-              <div className="relative">
-                <Image
-                  src="/images/capa-paisefilhos.jpg"
-                  alt="Capa do livro Pais e Filhos: Um Legado de Grandes Valores"
-                  width={240}
-                  height={300}
-                  className="w-full h-64 object-cover"
-                />
-              </div>
-              <CardContent className="p-6 flex flex-col flex-grow">
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Pais e Filhos: Um Legado de Grandes Valores</h3>
-                <p className="text-gray-600 mb-4 leading-relaxed text-sm flex-grow">
-                  Um guia completo para pais que desejam construir relacionamentos sólidos e transmitir valores
-                  essenciais para as próximas gerações.
-                </p>
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="flex">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                    ))}
-                  </div>
-                  <span className="text-xs text-gray-500">4.8/5</span>
-                </div>
-                <div className="space-y-2 mt-auto">
-                  <Button className="w-full bg-[#ff6b6b] hover:bg-[#e55555] rounded-full text-sm" asChild>
-                    <Link href="/livros/pais-e-filhos">Ver detalhes</Link>
-                  </Button>
-                  <Button variant="outline" className="w-full rounded-full text-sm bg-transparent">
-                    <ShoppingCart className="w-4 h-4 mr-2" />
-                    R$ 59,90
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* 96 Poesias */}
-            <Card className="overflow-hidden border-0 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full">
-              <div className="relative">
-                <Image
-                  src="/images/livro-96.jpg"
-                  alt="Capa do livro 96 Poesias"
-                  width={240}
-                  height={300}
-                  className="w-full h-64 object-cover"
-                />
-                <div className="absolute top-3 right-3 bg-[#1d9b9a] text-white px-3 py-1 rounded-full text-xs font-semibold">
-                  Poesia
-                </div>
-              </div>
-              <CardContent className="p-6 flex flex-col flex-grow">
-                <h3 className="text-xl font-bold text-gray-900 mb-3">96 Poesias</h3>
-                <p className="text-gray-600 mb-4 leading-relaxed text-sm flex-grow">
-                  Uma coletânea sensível de poesias que tocam o coração e despertam reflexões profundas sobre amor,
-                  família e os momentos preciosos da vida.
-                </p>
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="flex">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                    ))}
-                  </div>
-                  <span className="text-xs text-gray-500">4.7/5</span>
-                </div>
-                <div className="space-y-2 mt-auto">
-                  <Button className="w-full bg-[#1d9b9a] hover:bg-[#16807f] rounded-full text-sm" asChild>
-                    <Link href="/livros/96-poesias">Ver detalhes</Link>
-                  </Button>
-                  <Button variant="outline" className="w-full rounded-full text-sm bg-transparent">
-                    <ShoppingCart className="w-4 h-4 mr-2" />
-                    R$ 49,90
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* As 8 Maravilhas Naturais de Schroeder em Poesia */}
-            <Card className="overflow-hidden border-0 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full">
-              <div className="relative">
-                <Image
-                  src="/placeholder.svg?height=300&width=240"
-                  alt="Capa do livro As 8 Maravilhas Naturais de Schroeder em Poesia"
-                  width={240}
-                  height={300}
-                  className="w-full h-64 object-cover"
-                />
-                <div className="absolute top-3 right-3 bg-[#ff6b6b] text-white px-3 py-1 rounded-full text-xs font-semibold">
-                  Regional
-                </div>
-              </div>
-              <CardContent className="p-6 flex flex-col flex-grow">
-                <h3 className="text-xl font-bold text-gray-900 mb-3">As 8 Maravilhas Naturais de Schroeder</h3>
-                <p className="text-gray-600 mb-4 leading-relaxed text-sm flex-grow">
-                  Uma homenagem poética às belezas naturais de Schroeder, SC. Versos que retratam as maravilhas que
-                  fazem desta região um paraíso natural.
-                </p>
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="flex">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                    ))}
-                  </div>
-                  <span className="text-xs text-gray-500">4.6/5</span>
-                </div>
-                <div className="space-y-2 mt-auto">
-                  <Button className="w-full bg-[#ff6b6b] hover:bg-[#e55555] rounded-full text-sm">Ver detalhes</Button>
-                  <Button variant="outline" className="w-full rounded-full text-sm bg-transparent">
-                    <ShoppingCart className="w-4 h-4 mr-2" />
-                    R$ 45,90
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+                  <CardContent className="p-6 flex flex-col flex-grow">
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">{book.title}</h3>
+                    <p className="text-gray-600 mb-4 leading-relaxed text-sm flex-grow line-clamp-3">
+                      {book.description}
+                    </p>
+                    <div className="flex items-center gap-2 mb-4">
+                      <div className="flex">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className={`w-4 h-4 ${i < Math.floor(book.rating) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} />
+                        ))}
+                      </div>
+                      <span className="text-xs text-gray-500">{book.rating}/5</span>
+                    </div>
+                    <div className="space-y-2 mt-auto">
+                      <Button className="w-full bg-[#1d9b9a] hover:bg-[#16807f] rounded-full text-sm" asChild>
+                        <Link href={`/livros/${book.id}`}>Ver detalhes</Link>
+                      </Button>
+                      <Button variant="outline" className="w-full rounded-full text-sm bg-transparent">
+                        <ShoppingCart className="w-4 h-4 mr-2" />
+                        R$ {book.price.toFixed(2)}
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))
+            )}
           </div>
 
           <div className="text-center mt-12">

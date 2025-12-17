@@ -1,11 +1,66 @@
+
+'use client'
+
+import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { BookOpen, Star, ShoppingCart, Heart, Users, Feather, Mountain } from "@/components/icons"
 import Image from "next/image"
 import { Header } from "@/components/header"
 import Link from "next/link"
+import { useEffect, useState } from "react"
+
+interface Book {
+  id: string
+  title: string
+  description: string
+  price: number
+  category: string
+  rating: number
+  imageUrl: string
+  features: string[]
+  sold: number
+}
 
 export default function LivrosPage() {
+  const [books, setBooks] = useState<Book[]>([])
+  const [loading, setLoading] = useState(true)
+  const supabase = createClient()
+
+  useEffect(() => {
+    async function fetchBooks() {
+      try {
+        const { data, error } = await supabase
+          .from('books')
+          .select('*')
+          .eq('is_active', true)
+          .order('created_at', { ascending: false })
+
+        if (error) throw error
+
+        if (data) {
+          setBooks(data.map((book: any) => ({
+            id: book.id,
+            title: book.title,
+            description: book.description || '',
+            price: book.price,
+            category: book.category || '',
+            rating: book.rating || 0,
+            imageUrl: book.image_url || '/images/placeholder-book.jpg',
+            features: book.features || [],
+            sold: book.sold
+          })))
+        }
+      } catch (error) {
+        console.error('Error fetching books:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchBooks()
+  }, [])
+
   return (
     <div className="min-h-screen bg-white">
       <Header />
@@ -67,7 +122,7 @@ export default function LivrosPage() {
                 <div className="w-16 h-16 bg-[#1d9b9a] rounded-full flex items-center justify-center mx-auto mb-4">
                   <BookOpen className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-3xl font-bold text-gray-900 mb-2">4</h3>
+                <h3 className="text-3xl font-bold text-gray-900 mb-2">{books.length}</h3>
                 <p className="text-gray-600">Livros Publicados</p>
               </CardContent>
             </Card>
@@ -77,7 +132,7 @@ export default function LivrosPage() {
                 <div className="w-16 h-16 bg-[#ff6b6b] rounded-full flex items-center justify-center mx-auto mb-4">
                   <Users className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-3xl font-bold text-gray-900 mb-2">15.000+</h3>
+                <h3 className="text-3xl font-bold text-gray-900 mb-2">10.000+</h3>
                 <p className="text-gray-600">Leitores Impactados</p>
               </CardContent>
             </Card>
@@ -116,291 +171,71 @@ export default function LivrosPage() {
           </div>
 
           <div className="space-y-20">
-            {/* Método OOBA Para a Vida Toda */}
-            <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-              <div className="relative">
-                <Image
-                  src="/images/ooba-livro.jpg"
-                  alt="Capa do livro Método OOBA Para a Vida Toda"
-                  width={400}
-                  height={600}
-                  className="rounded-2xl shadow-2xl mx-auto"
-                />
-                <div className="absolute -top-4 -right-4 bg-[#1d9b9a] text-white px-4 py-2 rounded-full text-sm font-semibold">
-                  Bestseller
-                </div>
+            {loading ? (
+              <div className="flex justify-center items-center h-64">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#1d9b9a]"></div>
               </div>
-              <div>
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 bg-[#1d9b9a] rounded-full flex items-center justify-center">
-                    <Heart className="w-6 h-6 text-white" />
+            ) : books.length === 0 ? (
+              <div className="text-center text-gray-500">Nenhum livro encontrado.</div>
+            ) : (
+              books.map((book, index) => (
+                <div key={book.id} className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                  <div className={`${index % 2 === 1 ? 'lg:order-2' : ''} relative`}>
+                    <Image
+                      src={book.imageUrl}
+                      alt={`Capa do livro ${book.title}`}
+                      width={400}
+                      height={600}
+                      className="rounded-2xl shadow-2xl mx-auto"
+                    />
                   </div>
-                  <span className="text-[#1d9b9a] font-semibold text-lg">Guia Completo</span>
-                </div>
-                <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Método OOBA Para a Vida Toda</h3>
-                <p className="text-lg text-gray-600 leading-relaxed mb-6">
-                  O guia definitivo para aplicar o Método OOBA em todas as fases da vida familiar. Desde a primeira
-                  infância até a adolescência, este livro oferece ferramentas práticas e estratégias comprovadas para
-                  construir relacionamentos familiares sólidos e duradouros.
-                </p>
-                <div className="space-y-3 mb-8">
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-[#1d9b9a] rounded-full"></div>
-                    <span className="text-gray-700">Os 4 pilares explicados em detalhes</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-[#1d9b9a] rounded-full"></div>
-                    <span className="text-gray-700">Casos reais e exemplos práticos</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-[#1d9b9a] rounded-full"></div>
-                    <span className="text-gray-700">Exercícios para aplicação imediata</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-[#1d9b9a] rounded-full"></div>
-                    <span className="text-gray-700">Adaptações para diferentes idades</span>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="flex">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                    ))}
-                  </div>
-                  <span className="text-gray-600">4.9/5 (1.247 avaliações)</span>
-                </div>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Button className="bg-[#1d9b9a] hover:bg-[#16807f] px-8 py-3 rounded-full font-semibold">
-                    <ShoppingCart className="w-5 h-5 mr-2" />
-                    Comprar Agora
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="border-[#1d9b9a] text-[#1d9b9a] hover:bg-[#1d9b9a] hover:text-white px-8 py-3 rounded-full font-semibold bg-transparent"
-                    asChild
-                  >
-                    <Link href="/livros/metodo-ooba-livro">
-                      <BookOpen className="w-5 h-5 mr-2" />
-                      Saiba mais
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-            </div>
-
-            {/* Pais e Filhos: Um Legado de Grandes Valores */}
-            <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-              <div className="lg:order-2 relative">
-                <Image
-                  src="/images/pais-filhos-capa.jpg"
-                  alt="Capa do livro Pais e Filhos: Um Legado de Grandes Valores"
-                  width={400}
-                  height={600}
-                  className="rounded-2xl shadow-2xl mx-auto"
-                />
-              </div>
-              <div className="lg:order-1">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 bg-[#ff6b6b] rounded-full flex items-center justify-center">
-                    <Users className="w-6 h-6 text-white" />
-                  </div>
-                  <span className="text-[#ff6b6b] font-semibold text-lg">Educação Familiar</span>
-                </div>
-                <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                  Pais e Filhos: Um Legado de Grandes Valores
-                </h3>
-                <p className="text-lg text-gray-600 leading-relaxed mb-6">
-                  Uma obra profunda sobre a transmissão de valores entre gerações. Este livro explora como pais podem
-                  ser mentores efetivos, criando um legado de princípios sólidos que transcendem o tempo e formam o
-                  caráter das próximas gerações.
-                </p>
-                <div className="space-y-3 mb-8">
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-[#ff6b6b] rounded-full"></div>
-                    <span className="text-gray-700">Estratégias para transmitir valores</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-[#ff6b6b] rounded-full"></div>
-                    <span className="text-gray-700">Formação do caráter infantil</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-[#ff6b6b] rounded-full"></div>
-                    <span className="text-gray-700">Histórias inspiradoras reais</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-[#ff6b6b] rounded-full"></div>
-                    <span className="text-gray-700">Reflexões sobre legado familiar</span>
+                  <div className={`${index % 2 === 1 ? 'lg:order-1' : ''}`}>
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className={`w-12 h-12 ${index % 2 === 0 ? 'bg-[#1d9b9a]' : 'bg-[#ff6b6b]'} rounded-full flex items-center justify-center`}>
+                        {index % 2 === 0 ? <Heart className="w-6 h-6 text-white" /> : <Users className="w-6 h-6 text-white" />}
+                      </div>
+                      <span className={`${index % 2 === 0 ? 'text-[#1d9b9a]' : 'text-[#ff6b6b]'} font-semibold text-lg`}>{book.category}</span>
+                    </div>
+                    <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">{book.title}</h3>
+                    <p className="text-lg text-gray-600 leading-relaxed mb-6">
+                      {book.description}
+                    </p>
+                    <div className="space-y-3 mb-8">
+                      {book.features.map((feature, i) => (
+                        <div key={i} className="flex items-center gap-3">
+                          <div className={`w-2 h-2 ${index % 2 === 0 ? 'bg-[#1d9b9a]' : 'bg-[#ff6b6b]'} rounded-full`}></div>
+                          <span className="text-gray-700">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="flex">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className={`w-5 h-5 ${i < Math.floor(book.rating) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} />
+                        ))}
+                      </div>
+                      <span className="text-gray-600">{book.rating}/5 ({book.sold} vendidos)</span>
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-4">
+                      <Button className={`${index % 2 === 0 ? 'bg-[#1d9b9a] hover:bg-[#16807f]' : 'bg-[#ff6b6b] hover:bg-[#e55555]'} px-8 py-3 rounded-full font-semibold`}>
+                        <ShoppingCart className="w-5 h-5 mr-2" />
+                        Comprar Agora
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className={`border-${index % 2 === 0 ? '[#1d9b9a]' : '[#ff6b6b]'} text-${index % 2 === 0 ? '[#1d9b9a]' : '[#ff6b6b]'} hover:bg-${index % 2 === 0 ? '[#1d9b9a]' : '[#ff6b6b]'} hover:text-white px-8 py-3 rounded-full font-semibold bg-transparent`}
+                        asChild
+                      >
+                        <Link href={`/livros/${book.id}`}>
+                          <BookOpen className="w-5 h-5 mr-2" />
+                          Saiba mais
+                        </Link>
+                      </Button>
+                    </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="flex">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                    ))}
-                  </div>
-                  <span className="text-gray-600">4.8/5 (892 avaliações)</span>
-                </div>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Button className="bg-[#ff6b6b] hover:bg-[#e55555] px-8 py-3 rounded-full font-semibold">
-                    <ShoppingCart className="w-5 h-5 mr-2" />
-                    Comprar Agora
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="border-[#ff6b6b] text-[#ff6b6b] hover:bg-[#ff6b6b] hover:text-white px-8 py-3 rounded-full font-semibold bg-transparent"
-                    asChild
-                  >
-                    <Link href="/livros/pais-e-filhos">
-                      <BookOpen className="w-5 h-5 mr-2" />
-                      Saiba mais
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-            </div>
-
-            {/* 96 Poesias */}
-            <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-              <div className="relative">
-                <Image
-                  src="/images/96poesia-capa.jpg"
-                  alt="Capa do livro 96 Poesias"
-                  width={400}
-                  height={600}
-                  className="rounded-2xl shadow-2xl mx-auto"
-                />
-                <div className="absolute -top-4 -right-4 bg-[#1d9b9a] text-white px-4 py-2 rounded-full text-sm font-semibold">
-                  Poesia
-                </div>
-              </div>
-              <div>
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 bg-[#1d9b9a] rounded-full flex items-center justify-center">
-                    <Feather className="w-6 h-6 text-white" />
-                  </div>
-                  <span className="text-[#1d9b9a] font-semibold text-lg">Coletânea Poética</span>
-                </div>
-                <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">96 Poesias</h3>
-                <p className="text-lg text-gray-600 leading-relaxed mb-6">
-                  Uma coletânea sensível e tocante que explora os sentimentos mais profundos da experiência humana.
-                  Através de versos cuidadosamente elaborados, este livro convida à reflexão sobre amor, família, fé e
-                  os momentos preciosos que dão significado à vida.
-                </p>
-                <div className="space-y-3 mb-8">
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-[#1d9b9a] rounded-full"></div>
-                    <span className="text-gray-700">Poesias sobre família e amor</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-[#1d9b9a] rounded-full"></div>
-                    <span className="text-gray-700">Reflexões sobre a vida</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-[#1d9b9a] rounded-full"></div>
-                    <span className="text-gray-700">Momentos de contemplação</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-[#1d9b9a] rounded-full"></div>
-                    <span className="text-gray-700">Linguagem acessível e profunda</span>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="flex">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                    ))}
-                  </div>
-                  <span className="text-gray-600">4.7/5 (634 avaliações)</span>
-                </div>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Button className="bg-[#1d9b9a] hover:bg-[#16807f] px-8 py-3 rounded-full font-semibold">
-                    <ShoppingCart className="w-5 h-5 mr-2" />
-                    Comprar Agora
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="border-[#1d9b9a] text-[#1d9b9a] hover:bg-[#1d9b9a] hover:text-white px-8 py-3 rounded-full font-semibold bg-transparent"
-                    asChild
-                  >
-                    <Link href="/livros/96-poesias">
-                      <BookOpen className="w-5 h-5 mr-2" />
-                      Saiba mais
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-            </div>
-
-            {/* As 8 Maravilhas Naturais de Schroeder em Poesia */}
-            <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-              <div className="lg:order-2 relative">
-                <Image
-                  src="/images/maravilhas-capa.jpg"
-                  alt="Capa do livro As 8 Maravilhas Naturais de Schroeder em Poesia"
-                  width={400}
-                  height={600}
-                  className="rounded-2xl shadow-2xl mx-auto"
-                />
-                <div className="absolute -top-4 -right-4 bg-[#ff6b6b] text-white px-4 py-2 rounded-full text-sm font-semibold">
-                  Regional
-                </div>
-              </div>
-              <div className="lg:order-1">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 bg-[#ff6b6b] rounded-full flex items-center justify-center">
-                    <Mountain className="w-6 h-6 text-white" />
-                  </div>
-                  <span className="text-[#ff6b6b] font-semibold text-lg">Poesia Regional</span>
-                </div>
-                <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                  As 8 Maravilhas Naturais de Schroeder em Poesia
-                </h3>
-                <p className="text-lg text-gray-600 leading-relaxed mb-6">
-                  Uma homenagem poética às belezas naturais de Schroeder, Santa Catarina. Este livro único combina o
-                  amor pela natureza com a sensibilidade poética, retratando através de versos as maravilhas que fazem
-                  desta região um verdadeiro paraíso natural.
-                </p>
-                <div className="space-y-3 mb-8">
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-[#ff6b6b] rounded-full"></div>
-                    <span className="text-gray-700">8 poemas dedicados às belezas locais</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-[#ff6b6b] rounded-full"></div>
-                    <span className="text-gray-700">Fotografias das paisagens</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-[#ff6b6b] rounded-full"></div>
-                    <span className="text-gray-700">Conexão com a natureza</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-[#ff6b6b] rounded-full"></div>
-                    <span className="text-gray-700">Valorização do patrimônio natural</span>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="flex">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                    ))}
-                  </div>
-                  <span className="text-gray-600">4.6/5 (312 avaliações)</span>
-                </div>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Button className="bg-[#ff6b6b] hover:bg-[#e55555] px-8 py-3 rounded-full font-semibold">
-                    <ShoppingCart className="w-5 h-5 mr-2" />
-                    Comprar Agora
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="border-[#ff6b6b] text-[#ff6b6b] hover:bg-[#ff6b6b] hover:text-white px-8 py-3 rounded-full font-semibold bg-transparent"
-                  >
-                    <BookOpen className="w-5 h-5 mr-2" />
-                    Saiba mais
-                  </Button>
-                </div>
-              </div>
-            </div>
+              ))
+            )}
           </div>
         </div>
       </section>

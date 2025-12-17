@@ -2,9 +2,12 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import { useCart } from "@/context/cart-context"
+import { ShoppingCart } from "lucide-react"
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { items } = useCart()
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -48,7 +51,15 @@ export function Header() {
           </nav>
 
           {/* CTA Button Desktop */}
-          <div className="hidden lg:block">
+          <div className="hidden lg:flex items-center space-x-4">
+            <Link href="/checkout" className="relative p-2 text-gray-700 hover:text-[#1d9b9a] transition-colors">
+              <ShoppingCart className="w-6 h-6" />
+              {items.length > 0 && (
+                <span className="absolute top-0 right-0 inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 rounded-full">
+                  {items.length}
+                </span>
+              )}
+            </Link>
             <Link href="/agendar-palestra" className="bg-[#1d9b9a] hover:bg-[#16807f] text-white px-6 py-2 rounded-full font-semibold inline-block">
               Agendar Palestra
             </Link>
@@ -86,6 +97,14 @@ export function Header() {
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Agendar Palestra
+                </Link>
+                <Link
+                  href="/checkout"
+                  className="w-full mt-4 flex items-center justify-center space-x-2 text-gray-700 font-medium"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <ShoppingCart className="w-5 h-5" />
+                  <span>Carrinho ({items.length})</span>
                 </Link>
               </div>
             </nav>
