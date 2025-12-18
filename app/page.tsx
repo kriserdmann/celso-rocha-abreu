@@ -68,10 +68,10 @@ export default function LandingPage() {
     <div className="min-h-screen bg-white">
       <Header />
       {/* Hero Section */}
-      <section className="relative bg-[#1d9b9a] py-10 lg:py-16 pt-16 lg:pt-20">
+      <section className="relative bg-[#1d9b9a] pt-16 lg:pt-20 pb-0">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <div className="bg-white rounded-3xl p-8 lg:p-12 shadow-2xl">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
+            <div className="bg-white rounded-3xl p-8 lg:p-12 shadow-2xl self-center">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-gray-900">
                 Transforme sua família com amor, conexão e propósito
               </h1>
@@ -96,7 +96,7 @@ export default function LandingPage() {
             </div>
             <div className="relative flex items-end h-full" style={{ minHeight: 0 }}>
               <Image
-                src="/images/celso-capa.png"
+                src="/images/capa-celso-2.png"
                 alt="Celso Rocha de Abreu - Palestrante e criador do Método OOBA"
                 width={500}
                 height={600}
@@ -129,7 +129,7 @@ export default function LandingPage() {
                 filhos se conectam, criando memórias afetivas que duram para sempre.
               </p>
               <div className="flex items-center gap-4">
-                <div className="w-16 h-16 bg-[#1d9b9a] rounded-full flex items-center justify-center">
+                <div className="w-16 h-16 bg-[#1d9b9a] rounded-full flex items-center justify-center shrink-0">
                   <Heart className="w-8 h-8 text-white" />
                 </div>
                 <div>
@@ -210,7 +210,7 @@ export default function LandingPage() {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div className="relative">
               <Image
-                src="/images/palestra-celso.jpg"
+                src="/images/palestras-celso-diana.jpg"
                 alt="Celso Rocha palestrando"
                 width={600}
                 height={400}
