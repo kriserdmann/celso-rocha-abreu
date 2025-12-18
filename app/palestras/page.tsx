@@ -45,6 +45,7 @@ export default function PalestrasPage() {
       }
     } catch (error) {
       console.error('Error fetching lectures:', error)
+      console.error('Error details:', JSON.stringify(error, null, 2))
     } finally {
       setLoading(false)
     }

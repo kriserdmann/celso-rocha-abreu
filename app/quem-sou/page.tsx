@@ -36,7 +36,7 @@ export default function QuemSouPage() {
             </div>
             <div className="relative">
               <Image
-                src="/images/palestra-celso.jpg"
+                src="/images/celso-quem-sou-eu.jpg"
                 alt="Celso Rocha de Abreu"
                 width={500}
                 height={600}
@@ -62,19 +62,19 @@ export default function QuemSouPage() {
             <div className="space-y-8">
               <div className="prose prose-lg max-w-none">
                 <p className="text-lg text-gray-600 leading-relaxed mb-6">
-                  Minha jornada como educador familiar começou de forma muito pessoal.  Como esposo e pai, enfrentei os mesmos desafios que milhares de famílias enfrentam diariamente: como equilibrar necessidades, sentimentos e emoções, como me comunicar integralmente com minha família, em especial com nossos filhos e sobretudo criar um ambiente familiar que nutrisse o crescimento saudável desenvolvendo suas potências. 
+                  Minha jornada como educador familiar começou de forma muito pessoal.  Como esposo e pai, enfrentei os mesmos desafios que milhares de famílias enfrentam diariamente: como equilibrar necessidades, sentimentos e emoções, como me comunicar integralmente com minha família, em especial com nossos filhos e sobretudo criar um ambiente familiar que nutrisse o crescimento saudável desenvolvendo suas potências.
                 </p>
 
                 <p className="text-lg text-gray-600 leading-relaxed mb-6">
-                  Foi através dessas experiências combinadas com orações, anos de estudo e pesquisa, que nasceu o método OOBA. 
+                  Foi através dessas experiências combinadas com orações, anos de estudo e pesquisa, que nasceu o método OOBA.
                 </p>
 
                 <p className="text-lg text-gray-600 leading-relaxed mb-8">
-                  Não se trata apenas de teoria acadêmica,  mas de ferramentas práticas testadas no dia a dia, na realidade das famílias brasileiras. 
+                  Não se trata apenas de teoria acadêmica,  mas de ferramentas práticas testadas no dia a dia, na realidade das famílias brasileiras.
                 </p>
 
                 <p className="text-lg text-gray-600 leading-relaxed mb-8">
-                  Hoje,  após mais de 30 anos dedicados a esta missão,  tenho o privilégio de ver famílias inteiras usufruindo das transformações propostas. Cada palestra, cada livro, cada conversa é uma oportunidade de plantar sementes de fé, esperança e amor. 
+                  Hoje,  após mais de 30 anos dedicados a esta missão,  tenho o privilégio de ver famílias inteiras usufruindo das transformações propostas. Cada palestra, cada livro, cada conversa é uma oportunidade de plantar sementes de fé, esperança e amor.
                 </p>
               </div>
             </div>
@@ -217,7 +217,7 @@ export default function QuemSouPage() {
                     <div>
                       <h3 className="text-xl font-bold text-gray-900 mb-3">Educação e Desenvolvimento Familiar</h3>
                       <p className="text-gray-600 leading-relaxed mb-4">
-                        Formação em Teologia Católica e desenvolvimento em Bioética, com foco em desenvolvimento familiar e comunicação interpessoal. 
+                        Formação em Teologia Católica e desenvolvimento em Bioética, com foco em desenvolvimento familiar e comunicação interpessoal.
                       </p>
                       <ul className="text-gray-600 space-y-2">
                         <li>• Especialização Católica em Terapia de Casais e Familiar</li>

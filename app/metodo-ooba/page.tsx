@@ -315,7 +315,7 @@ export default function MetodoOOBAPage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-12 md:gap-16">
             <Card className="text-center p-8 border-0 shadow-lg relative">
               <CardContent className="p-0">
                 <div className="w-16 h-16 bg-[#1d9b9a] rounded-full flex items-center justify-center mx-auto mb-6">
@@ -327,8 +327,8 @@ export default function MetodoOOBAPage() {
                   de melhoria.
                 </p>
               </CardContent>
-              <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2">
-                <ArrowRight className="w-8 h-8 text-[#1d9b9a]" />
+              <div className="hidden md:flex absolute top-1/2 -right-6 lg:-right-8 transform -translate-y-1/2 translate-x-1/2 w-12 h-12 bg-white rounded-full shadow-lg items-center justify-center z-10">
+                <ArrowRight className="w-6 h-6 text-[#1d9b9a]" />
               </div>
             </Card>
 
@@ -343,8 +343,8 @@ export default function MetodoOOBAPage() {
                   familiar.
                 </p>
               </CardContent>
-              <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2">
-                <ArrowRight className="w-8 h-8 text-[#ff6b6b]" />
+              <div className="hidden md:flex absolute top-1/2 -right-6 lg:-right-8 transform -translate-y-1/2 translate-x-1/2 w-12 h-12 bg-white rounded-full shadow-lg items-center justify-center z-10">
+                <ArrowRight className="w-6 h-6 text-[#ff6b6b]" />
               </div>
             </Card>
 

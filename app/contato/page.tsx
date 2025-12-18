@@ -130,7 +130,7 @@ export default function ContatoPage() {
             </div>
             <div className="relative">
               <Image
-                src="/images/contato-celso.jpg"
+                src="/images/celso-quem-sou-eu.jpg"
                 alt="Celso Rocha em seu escritório"
                 width={600}
                 height={500}
