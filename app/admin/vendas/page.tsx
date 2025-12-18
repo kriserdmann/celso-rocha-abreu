@@ -25,6 +25,8 @@ import {
   Plus
 } from 'lucide-react'
 import AdminNav from '@/components/admin-nav'
+import { createClient } from '@/lib/supabase/client'
+import { useEffect } from 'react'
 
 interface Order {
   id: string
@@ -50,107 +52,6 @@ interface Order {
   notes?: string
 }
 
-const mockOrders: Order[] = [
-  {
-    id: 'ORD-2024-001',
-    customerName: 'Maria Silva',
-    customerEmail: 'maria.silva@email.com',
-    customerPhone: '(48) 99999-9999',
-    items: [
-      { bookTitle: 'Método OOBA Para a Vida Toda', quantity: 2, price: 89.90, total: 179.80 }
-    ],
-    totalAmount: 179.80,
-    status: 'completed',
-    paymentMethod: 'Cartão de Crédito',
-    orderDate: '2024-05-15',
-    shippingAddress: {
-      street: 'Rua das Flores, 123',
-      city: 'Florianópolis',
-      state: 'SC',
-      zipCode: '88000-000'
-    },
-    notes: 'Cliente pediu embalagem para presente'
-  },
-  {
-    id: 'ORD-2024-002',
-    customerName: 'João Santos',
-    customerEmail: 'joao.santos@email.com',
-    customerPhone: '(48) 98888-8888',
-    items: [
-      { bookTitle: 'Pais e Filhos: Um Legado de Grandes Valores', quantity: 1, price: 79.90, total: 79.90 }
-    ],
-    totalAmount: 79.90,
-    status: 'processing',
-    paymentMethod: 'PIX',
-    orderDate: '2024-05-14',
-    shippingAddress: {
-      street: 'Av. Central, 456',
-      city: 'São José',
-      state: 'SC',
-      zipCode: '88100-000'
-    }
-  },
-  {
-    id: 'ORD-2024-003',
-    customerName: 'Ana Costa',
-    customerEmail: 'ana.costa@email.com',
-    customerPhone: '(48) 97777-7777',
-    items: [
-      { bookTitle: '96 Poesias', quantity: 1, price: 59.90, total: 59.90 },
-      { bookTitle: 'Método OOBA Para a Vida Toda', quantity: 1, price: 89.90, total: 89.90 }
-    ],
-    totalAmount: 149.80,
-    status: 'pending',
-    paymentMethod: 'Boleto Bancário',
-    orderDate: '2024-05-13',
-    shippingAddress: {
-      street: 'Rua do Comércio, 789',
-      city: 'Palhoça',
-      state: 'SC',
-      zipCode: '88200-000'
-    }
-  },
-  {
-    id: 'ORD-2024-004',
-    customerName: 'Pedro Oliveira',
-    customerEmail: 'pedro.oliveira@email.com',
-    customerPhone: '(48) 96666-6666',
-    items: [
-      { bookTitle: 'As 8 Maravilhas Naturais de Schroeder', quantity: 3, price: 69.90, total: 209.70 }
-    ],
-    totalAmount: 209.70,
-    status: 'completed',
-    paymentMethod: 'Cartão de Crédito',
-    orderDate: '2024-05-12',
-    shippingAddress: {
-      street: 'Rua das Palmeiras, 321',
-      city: 'Biguaçu',
-      state: 'SC',
-      zipCode: '88300-000'
-    }
-  },
-  {
-    id: 'ORD-2024-005',
-    customerName: 'Carla Mendes',
-    customerEmail: 'carla.mendes@email.com',
-    customerPhone: '(48) 95555-5555',
-    items: [
-      { bookTitle: 'Método OOBA Para a Vida Toda', quantity: 1, price: 89.90, total: 89.90 }
-    ],
-    totalAmount: 89.90,
-    status: 'cancelled',
-    paymentMethod: 'PIX',
-    orderDate: '2024-05-11',
-    shippingAddress: {
-      street: 'Rua Nova, 654',
-      city: 'Florianópolis',
-      state: 'SC',
-      zipCode: '88000-000'
-    },
-    notes: 'Cliente cancelou pedido'
-  }
-]
-
 const statusColors = {
   pending: 'bg-yellow-100 text-yellow-800 border-yellow-200',
   processing: 'bg-blue-100 text-blue-800 border-blue-200',
@@ -166,11 +67,63 @@ const statusLabels = {
 }
 
 export default function SalesManagement() {
-  const [orders, setOrders] = useState<Order[]>(mockOrders)
+  const [orders, setOrders] = useState<Order[]>([])
+  const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState<string>('all')
   const [dateFilter, setDateFilter] = useState<string>('all')
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
+
+  const supabase = createClient()
+
+  const fetchOrders = async () => {
+    try {
+      setLoading(true)
+      const { data, error } = await supabase
+        .from('orders')
+        .select(`
+          *,
+          items:order_items(*)
+        `)
+        .order('created_at', { ascending: false })
+
+      if (error) throw error
+
+      if (data) {
+        // Map Supabase data to local Order interface
+        const mappedOrders: Order[] = data.map(order => ({
+          id: order.id,
+          customerName: order.customer_name,
+          customerEmail: order.customer_email,
+          customerPhone: order.customer_phone || 'Não informado',
+          customerCpf: order.customer_cpf,
+          items: order.items.map((item: any) => ({
+            bookTitle: item.book_title,
+            quantity: item.quantity,
+            price: Number(item.price),
+            total: Number(item.total)
+          })),
+          totalAmount: Number(order.total_amount),
+          status: order.status as any,
+          paymentMethod: order.payment_method || 'Pendente',
+          orderDate: order.created_at,
+          shippingAddress: order.shipping_address || {
+            street: 'Não informado', city: '', state: '', zipCode: ''
+          },
+          notes: order.notes
+        }))
+        setOrders(mappedOrders)
+      }
+    } catch (error) {
+      console.error('Error fetching orders:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchOrders()
+  }, [])
 
   const filteredOrders = orders.filter(order => {
     const matchesSearch = order.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -189,10 +142,21 @@ export default function SalesManagement() {
     return matchesSearch && matchesStatus && matchesDate
   })
 
-  const updateOrderStatus = (orderId: string, newStatus: Order['status']) => {
-    setOrders(orders.map(order =>
-      order.id === orderId ? { ...order, status: newStatus } : order
-    ))
+  const updateOrderStatus = async (orderId: string, newStatus: Order['status']) => {
+    try {
+      const { error } = await supabase
+        .from('orders')
+        .update({ status: newStatus })
+        .eq('id', orderId)
+
+      if (error) throw error
+
+      setOrders(orders.map(order =>
+        order.id === orderId ? { ...order, status: newStatus } : order
+      ))
+    } catch (error) {
+      console.error('Error updating status:', error)
+    }
   }
 
   const getStatusIcon = (status: Order['status']) => {
@@ -228,13 +192,8 @@ export default function SalesManagement() {
               <p className="text-gray-600 mt-1">Gerencie pedidos, clientes e pagamentos</p>
             </div>
             <div className="flex space-x-3">
-              <Button variant="outline" className="rounded-full">
-                <Download className="w-4 h-4 mr-2" />
-                Exportar
-              </Button>
-              <Button className="bg-[#1d9b9a] hover:bg-[#16807f] rounded-full">
-                <Plus className="w-4 h-4 mr-2" />
-                Novo Pedido
+              <Button variant="outline" className="rounded-full" onClick={fetchOrders}>
+                Atualizar
               </Button>
             </div>
           </div>
@@ -353,80 +312,93 @@ export default function SalesManagement() {
               <p className="text-sm text-gray-600">{filteredOrders.length} pedidos encontrados</p>
             </CardHeader>
             <CardContent>
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b border-gray-200">
-                      <th className="text-left py-3 px-4 font-medium text-gray-900">Pedido</th>
-                      <th className="text-left py-3 px-4 font-medium text-gray-900">Cliente</th>
-                      <th className="text-left py-3 px-4 font-medium text-gray-900">Valor</th>
-                      <th className="text-left py-3 px-4 font-medium text-gray-900">Status</th>
-                      <th className="text-left py-3 px-4 font-medium text-gray-900">Pagamento</th>
-                      <th className="text-left py-3 px-4 font-medium text-gray-900">Data</th>
-                      <th className="text-left py-3 px-4 font-medium text-gray-900">Ações</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredOrders.map((order) => (
-                      <tr key={order.id} className="border-b border-gray-100 hover:bg-gray-50">
-                        <td className="py-3 px-4">
-                          <div>
-                            <p className="font-medium text-gray-900">{order.id}</p>
-                            <p className="text-sm text-gray-600">{order.items.length} item(s)</p>
-                          </div>
-                        </td>
-                        <td className="py-3 px-4">
-                          <div>
-                            <p className="font-medium text-gray-900">{order.customerName}</p>
-                            <p className="text-sm text-gray-600">{order.customerEmail}</p>
-                          </div>
-                        </td>
-                        <td className="py-3 px-4">
-                          <p className="font-semibold text-gray-900">R$ {order.totalAmount.toFixed(2)}</p>
-                        </td>
-                        <td className="py-3 px-4">
-                          <Badge className={`${statusColors[order.status]} border`}>
-                            {getStatusIcon(order.status)}
-                            <span className="ml-1">{statusLabels[order.status]}</span>
-                          </Badge>
-                        </td>
-                        <td className="py-3 px-4">
-                          <p className="text-sm text-gray-900">{order.paymentMethod}</p>
-                        </td>
-                        <td className="py-3 px-4">
-                          <p className="text-sm text-gray-900">{new Date(order.orderDate).toLocaleDateString('pt-BR')}</p>
-                        </td>
-                        <td className="py-3 px-4">
-                          <div className="flex space-x-2">
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => setSelectedOrder(order)}
-                              className="rounded-full border-[#1d9b9a] text-[#1d9b9a] hover:bg-[#1d9b9a] hover:text-white"
-                            >
-                              <Eye className="w-4 h-4" />
-                            </Button>
-                            <Select
-                              value={order.status}
-                              onValueChange={(newStatus) => updateOrderStatus(order.id, newStatus as Order['status'])}
-                            >
-                              <SelectTrigger className="w-32 rounded-full text-xs">
-                                <SelectValue placeholder="Mudar status" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="pending">Pendente</SelectItem>
-                                <SelectItem value="processing">Processando</SelectItem>
-                                <SelectItem value="completed">Concluído</SelectItem>
-                                <SelectItem value="cancelled">Cancelado</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-                        </td>
+              {loading ? (
+                <div className="flex justify-center p-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="border-b border-gray-200">
+                        <th className="text-left py-3 px-4 font-medium text-gray-900">Pedido</th>
+                        <th className="text-left py-3 px-4 font-medium text-gray-900">Cliente</th>
+                        <th className="text-left py-3 px-4 font-medium text-gray-900">Valor</th>
+                        <th className="text-left py-3 px-4 font-medium text-gray-900">Status</th>
+                        <th className="text-left py-3 px-4 font-medium text-gray-900">Pagamento</th>
+                        <th className="text-left py-3 px-4 font-medium text-gray-900">Data</th>
+                        <th className="text-left py-3 px-4 font-medium text-gray-900">Ações</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                    </thead>
+                    <tbody>
+                      {filteredOrders.length === 0 ? (
+                        <tr>
+                          <td colSpan={7} className="text-center py-8 text-gray-500">
+                            Nenhum pedido encontrado
+                          </td>
+                        </tr>
+                      ) : (
+                        filteredOrders.map((order) => (
+                          <tr key={order.id} className="border-b border-gray-100 hover:bg-gray-50">
+                            <td className="py-3 px-4">
+                              <div>
+                                <p className="font-medium text-gray-900" title={order.id}>{order.id.slice(0, 8)}...</p>
+                                <p className="text-sm text-gray-600">{order.items.length} item(s)</p>
+                              </div>
+                            </td>
+                            <td className="py-3 px-4">
+                              <div>
+                                <p className="font-medium text-gray-900">{order.customerName}</p>
+                                <p className="text-sm text-gray-600">{order.customerEmail}</p>
+                              </div>
+                            </td>
+                            <td className="py-3 px-4">
+                              <p className="font-semibold text-gray-900">R$ {order.totalAmount.toFixed(2)}</p>
+                            </td>
+                            <td className="py-3 px-4">
+                              <Badge className={`${statusColors[order.status]} border`}>
+                                {getStatusIcon(order.status)}
+                                <span className="ml-1">{statusLabels[order.status]}</span>
+                              </Badge>
+                            </td>
+                            <td className="py-3 px-4">
+                              <p className="text-sm text-gray-900">{order.paymentMethod}</p>
+                            </td>
+                            <td className="py-3 px-4">
+                              <p className="text-sm text-gray-900">{new Date(order.orderDate).toLocaleDateString('pt-BR')}</p>
+                            </td>
+                            <td className="py-3 px-4">
+                              <div className="flex space-x-2">
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  onClick={() => setSelectedOrder(order)}
+                                  className="rounded-full border-[#1d9b9a] text-[#1d9b9a] hover:bg-[#1d9b9a] hover:text-white"
+                                >
+                                  <Eye className="w-4 h-4" />
+                                </Button>
+                                <Select
+                                  value={order.status}
+                                  onValueChange={(newStatus) => updateOrderStatus(order.id, newStatus as Order['status'])}
+                                >
+                                  <SelectTrigger className="w-32 rounded-full text-xs">
+                                    <SelectValue placeholder="Mudar status" />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    <SelectItem value="pending">Pendente</SelectItem>
+                                    <SelectItem value="processing">Processando</SelectItem>
+                                    <SelectItem value="completed">Concluído</SelectItem>
+                                    <SelectItem value="cancelled">Cancelado</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                            </td>
+                          </tr>
+                        )))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </CardContent>
           </Card>
 
