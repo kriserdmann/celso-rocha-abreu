@@ -18,7 +18,6 @@ interface Lecture {
   target_audience: string
   topics: string[]
   image_url: string
-  is_active: boolean
 }
 
 export default function PalestrasPage() {
@@ -35,7 +34,6 @@ export default function PalestrasPage() {
       const { data, error } = await supabase
         .from('lectures')
         .select('*')
-        .eq('is_active', true)
         .order('created_at', { ascending: false })
 
       if (error) throw error
@@ -103,7 +101,7 @@ export default function PalestrasPage() {
             </div>
           </div>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent"></div>
+
       </section>
 
       {/* Números e Impacto */}
