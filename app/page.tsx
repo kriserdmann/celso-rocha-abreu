@@ -445,7 +445,7 @@ export default function LandingPage() {
         <div className="container mx-auto px-4 md:px-6 text-center">
           <h3 className="text-2xl font-bold mb-4">Celso Rocha de Abreu</h3>
           <p className="text-gray-400 mb-6">Escritor, palestrante e criador do Método OOBA</p>
-          <p className="text-sm text-gray-500">© 2024 Celso Rocha de Abreu. Todos os direitos reservados.</p>
+          <p className="text-sm text-gray-500">© 2025 Celso Rocha de Abreu. Todos os direitos reservados.</p>
         </div>
       </footer>
     </div>

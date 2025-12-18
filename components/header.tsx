@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { useCart } from "@/context/cart-context"
 import { ShoppingCart } from "lucide-react"
 
@@ -27,13 +28,14 @@ export function Header() {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3">
-            <div className="w-10 h-10 md:w-12 md:h-12 bg-[#1d9b9a] rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-lg md:text-xl">CR</span>
-            </div>
-            <div className="hidden sm:block">
-              <h1 className="text-lg md:text-xl font-bold text-gray-900">Celso Rocha</h1>
-              <p className="text-xs md:text-sm text-gray-600">Método OOBA</p>
-            </div>
+            <Image
+              src="/images/logo-celso.png"
+              alt="Celso Rocha de Abreu"
+              width={180}
+              height={50}
+              className="h-10 md:h-12 w-auto object-contain"
+              priority
+            />
           </Link>
 
           {/* Desktop Navigation */}
