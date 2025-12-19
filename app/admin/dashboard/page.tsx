@@ -128,9 +128,16 @@ export default function AdminDashboard() {
   }
 
   const handleLogout = async () => {
-    await supabase.auth.signOut()
-    router.push('/admin/login')
-    router.refresh()
+    try {
+      await supabase.auth.signOut()
+      localStorage.removeItem('adminAuth')
+      localStorage.removeItem('adminUser')
+      router.refresh()
+      router.push('/admin/login')
+    } catch (error) {
+      console.error('Logout error:', error)
+      window.location.href = '/admin/login'
+    }
   }
 
   if (isLoading) {

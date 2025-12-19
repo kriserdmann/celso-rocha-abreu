@@ -364,6 +364,17 @@ export default function AdminSettings() {
                       className="rounded-full"
                     />
                   </div>
+                  <div className="space-y-2 md:col-span-2">
+                    <Label htmlFor="smtpPassword">Senha SMTP (App Password)</Label>
+                    <Input
+                      id="smtpPassword"
+                      type="password"
+                      value={settings?.smtp_settings?.password || ''}
+                      onChange={(e) => updateNestedSetting('smtp_settings', 'password', e.target.value)}
+                      placeholder="Senha do aplicativo (não a senha do email)"
+                      className="rounded-full"
+                    />
+                  </div>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Switch

@@ -20,12 +20,16 @@ import {
     DialogTrigger,
 } from '@/components/ui/dialog'
 
+import PaymentBrick from '@/components/checkout/payment-brick'
+
 export default function CheckoutPage() {
     const { items, removeItem, updateQuantity, addItem, total } = useCart()
     const router = useRouter()
     const supabase = createClient()
     const [loading, setLoading] = useState(false)
     const [availableBooks, setAvailableBooks] = useState<any[]>([])
+    const [showBrick, setShowBrick] = useState(false)
+    const [orderId, setOrderId] = useState<string | null>(null)
 
     useEffect(() => {
         const fetchBooks = async () => {
@@ -86,7 +90,7 @@ export default function CheckoutPage() {
         }
     }
 
-    const handleCheckout = async (e: React.FormEvent) => {
+    const handlePaymentStart = async (e: React.FormEvent) => {
         e.preventDefault()
 
         if (items.length === 0) {
@@ -96,11 +100,13 @@ export default function CheckoutPage() {
 
         try {
             setLoading(true)
+            // Create Order in Supabase first (using type='brick' to skip preference)
             const response = await fetch('/api/checkout', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     items,
+                    checkoutType: 'brick',
                     payer: {
                         email: formData.email,
                         name: formData.name,
@@ -111,12 +117,14 @@ export default function CheckoutPage() {
 
             const data = await response.json()
 
-            if (!response.ok) throw new Error(data.error || 'Erro ao processar pagamento')
+            if (!response.ok) throw new Error(data.error || 'Erro ao criar pedido')
 
-            if (data.url) {
-                window.location.href = data.url
+            if (data.orderId) {
+                setOrderId(data.orderId)
+                setShowBrick(true)
+                // Scroll to brick?
             } else {
-                throw new Error('URL de pagamento não retornada')
+                throw new Error('ID do pedido não retornado')
             }
         } catch (error: any) {
             console.error('Checkout error:', error)
@@ -124,6 +132,29 @@ export default function CheckoutPage() {
         } finally {
             setLoading(false)
         }
+    }
+
+    const handlePaymentSuccess = (paymentId: string, status: string, result?: any) => {
+        if (status === 'rejected') {
+            toast.error('Pagamento recusado pelo banco/operadora. Tente outro cartão.')
+            return
+        }
+
+        const message = status === 'approved' ? 'Pagamento aprovado!' : 'Pagamento iniciado!'
+        toast.success(message)
+
+        // Save Pix data if available
+        if (status === 'pending' && result?.point_of_interaction) {
+            localStorage.setItem(`pix_data_${orderId}`, JSON.stringify(result.point_of_interaction))
+        }
+
+        // Redirect to success page with status
+        window.location.href = `/checkout/success?order_id=${orderId}&collection_id=${paymentId}&status=${status}`
+    }
+
+    const handlePaymentError = (error: any) => {
+        toast.error('Erro no pagamento. Tente novamente.')
+        console.error(error)
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -162,7 +193,7 @@ export default function CheckoutPage() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     {/* Checkout Form */}
                     <div className="space-y-6">
-                        <form onSubmit={handleCheckout}>
+                        <form onSubmit={handlePaymentStart}>
                             <Card>
                                 <CardHeader>
                                     <CardTitle className="flex items-center">
@@ -180,6 +211,7 @@ export default function CheckoutPage() {
                                             value={formData.name}
                                             onChange={handleChange}
                                             placeholder="Seu nome completo"
+                                            disabled={showBrick}
                                         />
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -193,6 +225,7 @@ export default function CheckoutPage() {
                                                 value={formData.email}
                                                 onChange={handleChange}
                                                 placeholder="seu@email.com"
+                                                disabled={showBrick}
                                             />
                                         </div>
                                         <div className="space-y-2">
@@ -204,6 +237,7 @@ export default function CheckoutPage() {
                                                 value={formData.cpf}
                                                 onChange={handleChange}
                                                 placeholder="000.000.000-00"
+                                                disabled={showBrick}
                                             />
                                         </div>
                                     </div>
@@ -229,6 +263,7 @@ export default function CheckoutPage() {
                                                 onChange={handleChange}
                                                 onBlur={handleCepBlur}
                                                 placeholder="00000-000"
+                                                disabled={showBrick}
                                             />
                                         </div>
                                         <div className="space-y-2 md:col-span-2">
@@ -241,6 +276,7 @@ export default function CheckoutPage() {
                                                 onChange={handleChange}
                                                 readOnly
                                                 className="bg-gray-50"
+                                                disabled={showBrick}
                                             />
                                         </div>
                                     </div>
@@ -253,6 +289,7 @@ export default function CheckoutPage() {
                                                 required
                                                 value={formData.number}
                                                 onChange={handleChange}
+                                                disabled={showBrick}
                                             />
                                         </div>
                                         <div className="space-y-2 md:col-span-2">
@@ -263,6 +300,7 @@ export default function CheckoutPage() {
                                                 value={formData.complement}
                                                 onChange={handleChange}
                                                 placeholder="Apto, Bloco, etc."
+                                                disabled={showBrick}
                                             />
                                         </div>
                                     </div>
@@ -277,6 +315,7 @@ export default function CheckoutPage() {
                                                 onChange={handleChange}
                                                 readOnly
                                                 className="bg-gray-50"
+                                                disabled={showBrick}
                                             />
                                         </div>
                                         <div className="space-y-2">
@@ -289,30 +328,58 @@ export default function CheckoutPage() {
                                                 onChange={handleChange}
                                                 readOnly
                                                 className="bg-gray-50"
+                                                disabled={showBrick}
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <Label htmlFor="state">Estado</Label>
+                                            <Label htmlFor="state">Estado (UF)</Label>
                                             <Input
                                                 id="state"
                                                 name="state"
                                                 required
+                                                maxLength={2}
                                                 value={formData.state}
-                                                onChange={handleChange}
-                                                readOnly
-                                                className="bg-gray-50"
+                                                onChange={(e) => {
+                                                    e.target.value = e.target.value.toUpperCase();
+                                                    handleChange(e);
+                                                }}
+                                                readOnly={false} // Allow editing if CEP fails or returns bad data, though usually readOnly. I'll check handleCepBlur.
+                                                className="bg-gray-50 uppercase"
+                                                disabled={showBrick}
+                                                placeholder="UF"
                                             />
                                         </div>
                                     </div>
                                 </CardContent>
                                 <CardFooter>
-                                    <Button
-                                        type="submit"
-                                        className="w-full bg-[#1d9b9a] hover:bg-[#16807f] h-12 text-lg"
-                                        disabled={loading}
-                                    >
-                                        {loading ? 'Processando...' : 'Finalizar Compra no Mercado Pago'}
-                                    </Button>
+                                    {!showBrick ? (
+                                        <Button
+                                            type="submit"
+                                            className="w-full bg-[#1d9b9a] hover:bg-[#16807f] h-12 text-lg"
+                                            disabled={loading}
+                                        >
+                                            {loading ? 'Preparando...' : 'Ir para Pagamento'}
+                                        </Button>
+                                    ) : (
+                                        <div className="w-full">
+                                            <PaymentBrick
+                                                amount={total}
+                                                orderId={orderId!}
+                                                payerEmail={formData.email}
+                                                payerName={formData.name}
+                                                payerAddress={{
+                                                    zip_code: formData.cep,
+                                                    street: formData.street,
+                                                    number: formData.number,
+                                                    neighborhood: formData.neighborhood,
+                                                    city: formData.city,
+                                                    state: formData.state
+                                                }}
+                                                onSuccess={handlePaymentSuccess}
+                                                onError={handlePaymentError}
+                                            />
+                                        </div>
+                                    )}
                                 </CardFooter>
                             </Card>
                         </form>

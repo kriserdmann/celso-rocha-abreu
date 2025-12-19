@@ -27,14 +27,28 @@ const navigation = [
   { name: 'Configurações', href: '/admin/configuracoes', icon: Settings },
 ]
 
+import { createClient } from '@/lib/supabase/client'
+
+// ... (existing imports)
+
 export default function AdminNav() {
   const pathname = usePathname()
   const router = useRouter()
+  const supabase = createClient()
 
-  const handleLogout = () => {
-    localStorage.removeItem('adminAuth')
-    localStorage.removeItem('adminUser')
-    router.push('/admin/login')
+  const handleLogout = async () => {
+    try {
+      await supabase.auth.signOut()
+      localStorage.removeItem('adminAuth')
+      localStorage.removeItem('adminUser')
+      router.refresh()
+      router.push('/admin/login')
+    } catch (error) {
+      console.error('Logout error:', error)
+      // Force redirect anyway
+      localStorage.clear()
+      window.location.href = '/admin/login'
+    }
   }
 
   return (

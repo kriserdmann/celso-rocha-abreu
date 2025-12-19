@@ -42,7 +42,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         localStorage.setItem('cart', JSON.stringify(items))
     }, [items])
 
-    const addItem = (newItem: Omit<CartItem, 'quantity'>) => {
+    const addItem = React.useCallback((newItem: Omit<CartItem, 'quantity'>) => {
         setItems((currentItems) => {
             const existingItem = currentItems.find((item) => item.id === newItem.id)
 
@@ -58,14 +58,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             toast.success('Livro adicionado ao carrinho')
             return [...currentItems, { ...newItem, quantity: 1 }]
         })
-    }
+    }, [])
 
-    const removeItem = (id: string) => {
+    const removeItem = React.useCallback((id: string) => {
         setItems((currentItems) => currentItems.filter((item) => item.id !== id))
         toast.success('Item removido do carrinho')
-    }
+    }, [])
 
-    const updateQuantity = (id: string, quantity: number) => {
+    const updateQuantity = React.useCallback((id: string, quantity: number) => {
         if (quantity < 1) {
             removeItem(id)
             return
@@ -76,12 +76,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                 item.id === id ? { ...item, quantity } : item
             )
         )
-    }
+    }, [removeItem])
 
-    const clearCart = () => {
+    const clearCart = React.useCallback(() => {
         setItems([])
         localStorage.removeItem('cart')
-    }
+    }, [])
 
     const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
 

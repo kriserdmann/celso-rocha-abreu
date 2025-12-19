@@ -1,15 +1,19 @@
-import { createClient } from '@/lib/supabase/server'
+import { createClient } from '@supabase/supabase-js'
 import { NextResponse } from 'next/server'
-import nodemailer from 'nodemailer'
+import { sendEmail } from '@/lib/mail'
+
+// Use Service Role Key to bypass RLS for public contact form
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+const supabase = createClient(supabaseUrl, supabaseKey)
 
 export async function POST(request: Request) {
   try {
-    const supabase = await createClient()
     const body = await request.json()
     const { name, email, phone, subject, type, message } = body
 
-    // 1. Save to database
-    const { data: contactData, error: dbError } = await supabase
+    // 1. Save to database (Using Service Key bypasses RLS)
+    const { error: dbError } = await supabase
       .from('contacts')
       .insert([
         {
@@ -22,53 +26,45 @@ export async function POST(request: Request) {
           status: 'new'
         }
       ])
-      .select()
 
     if (dbError) {
       console.error('Database error:', dbError)
       return NextResponse.json({ error: 'Erro ao salvar mensagem' }, { status: 500 })
     }
 
-    // 2. Fetch settings for email
+    // 2. Send Admin Notification using shared utility
+    // We already fetch settings inside sendEmail, so we just pass the static admin email if known,
+    // or let's use the same logic as process_payment to get the destination.
+    // Actually, sendEmail inside logic fetches settings to get SMTP auth, 
+    // but the TO address usually comes from settings too (contact_email).
+
+    // We need to fetch settings here to know WHERE to send it, 
+    // OR update sendEmail to handle "send to admin" logic?
+    // Let's stick to the pattern: Fetch settings to get the "To" address.
+
     const { data: settings } = await supabase
       .from('site_settings')
-      .select('*')
+      .select('contact_email, admin_email')
       .single()
 
-    if (settings?.email_notifications && settings?.smtp_settings?.server) {
-      try {
-        const transporter = nodemailer.createTransport({
-          host: settings.smtp_settings.server,
-          port: settings.smtp_settings.port,
-          secure: settings.smtp_settings.ssl,
-          auth: {
-            user: settings.smtp_settings.user,
-            pass: settings.smtp_settings.password, // Note: In a real app, this should be decrypted/handled securely
-          },
-        })
+    const adminEmail = settings?.contact_email || settings?.admin_email
 
-        const mailOptions = {
-          from: `"${settings.admin_name}" <${settings.smtp_settings.user}>`,
-          to: settings.contact_email || settings.admin_email,
-          subject: `Nova Mensagem: ${subject}`,
-          html: `
-            <h2>Nova mensagem recebida pelo site</h2>
-            <p><strong>Nome:</strong> ${name}</p>
-            <p><strong>Email:</strong> ${email}</p>
-            <p><strong>Telefone:</strong> ${phone}</p>
-            <p><strong>Tipo:</strong> ${type}</p>
-            <p><strong>Assunto:</strong> ${subject}</p>
-            <br>
-            <p><strong>Mensagem:</strong></p>
-            <p>${message.replace(/\n/g, '<br>')}</p>
-          `,
-        }
-
-        await transporter.sendMail(mailOptions)
-      } catch (emailError) {
-        console.error('Email sending error:', emailError)
-        // Don't fail the request if email fails, just log it
-      }
+    if (adminEmail) {
+      await sendEmail({
+        to: adminEmail,
+        subject: `Nova Mensagem: ${subject}`,
+        html: `
+                <h2>Nova mensagem recebida pelo site</h2>
+                <p><strong>Nome:</strong> ${name}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Telefone:</strong> ${phone}</p>
+                <p><strong>Tipo:</strong> ${type}</p>
+                <p><strong>Assunto:</strong> ${subject}</p>
+                <br>
+                <p><strong>Mensagem:</strong></p>
+                <p>${message.replace(/\n/g, '<br>')}</p>
+            `
+      })
     }
 
     return NextResponse.json({ success: true })

@@ -30,9 +30,16 @@ alter table orders enable row level security;
 alter table order_items enable row level security;
 
 -- Policies (Simple permissive policies for now to ensure it works)
+drop policy if exists "Enable read access for all users" on orders;
+drop policy if exists "Enable insert access for all users" on orders;
+drop policy if exists "Enable update access for all users" on orders;
+
 create policy "Enable read access for all users" on orders for select using (true);
 create policy "Enable insert access for all users" on orders for insert with check (true);
 create policy "Enable update access for all users" on orders for update using (true);
+
+drop policy if exists "Enable read access for all users" on order_items;
+drop policy if exists "Enable insert access for all users" on order_items;
 
 create policy "Enable read access for all users" on order_items for select using (true);
 create policy "Enable insert access for all users" on order_items for insert with check (true);
