@@ -16,6 +16,8 @@ import {
 } from "@/components/icons"
 import Image from "next/image"
 import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
+import { Hero } from "@/components/ui/hero"
 
 export default function MetodoOOBALivroPage() {
   return (
@@ -23,61 +25,50 @@ export default function MetodoOOBALivroPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#1d9b9a] to-[#16807f] text-white py-20 lg:py-32 pt-32 lg:pt-40">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                  <Heart className="w-6 h-6 text-white" />
-                </div>
-                <span className="text-white/90 font-semibold text-lg">Guia Completo do Método OOBA</span>
+      <Hero
+        badgeIcon={<Heart className="w-6 h-6 text-white" />}
+        badgeText="Guia Completo do Método OOBA"
+        title="Método OOBA Para a Vida Toda"
+        description={
+          <>
+            O guia definitivo para transformar relacionamentos familiares através dos 4 pilares fundamentais
+            <br />
+            <br />
+            Ferramentas práticas, estratégias comprovadas e exercícios para aplicação imediata em todas as fases da vida familiar
+          </>
+        }
+        buttons={
+          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 mb-8 w-full">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-white/80 text-lg">Adquira o livro por apenas</p>
+                <p className="text-3xl md:text-4xl font-bold text-white">R$ 69,90</p>
+                <p className="text-white/80">com FRETE GRÁTIS + Bônus Exclusivos</p>
               </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                Método OOBA Para a Vida Toda
-              </h1>
-              <p className="text-xl md:text-2xl mb-6 opacity-90 leading-relaxed">
-                O guia definitivo para transformar relacionamentos familiares através dos 4 pilares fundamentais
-              </p>
-              <p className="text-lg md:text-xl mb-8 opacity-80 leading-relaxed">
-                Ferramentas práticas, estratégias comprovadas e exercícios para aplicação imediata em todas as fases da
-                vida familiar
-              </p>
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 mb-8">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-white/80 text-lg">Adquira o livro por apenas</p>
-                    <p className="text-3xl md:text-4xl font-bold text-white">R$ 69,90</p>
-                    <p className="text-white/80">com FRETE GRÁTIS + Bônus Exclusivos</p>
-                  </div>
-                  <div className="text-right">
-                    <Button
-                      size="lg"
-                      className="bg-white text-[#1d9b9a] hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-full"
-                    >
-                      <ShoppingCart className="w-5 h-5 mr-2" />
-                      Comprar Agora
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="relative">
-              <Image
-                src="/images/ooba-livro.jpg"
-                alt="Capa do livro Método OOBA Para a Vida Toda"
-                width={400}
-                height={600}
-                className="rounded-2xl shadow-2xl mx-auto"
-              />
-              <div className="absolute -top-4 -right-4 bg-white text-[#1d9b9a] px-4 py-2 rounded-full text-sm font-semibold">
-                #1 Bestseller
+              <div className="text-right">
+                <Button
+                  size="lg"
+                  className="bg-white text-[#1d9b9a] hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-full"
+                >
+                  <ShoppingCart className="w-5 h-5 mr-2" />
+                  Comprar Agora
+                </Button>
               </div>
             </div>
           </div>
+        }
+        image={{
+          src: "/images/ooba-livro.jpg",
+          alt: "Capa do livro Método OOBA Para a Vida Toda",
+          width: 400,
+          height: 600,
+          className: "rounded-2xl shadow-2xl mx-auto",
+        }}
+      >
+        <div className="absolute -top-4 -right-4 bg-white text-[#1d9b9a] px-4 py-2 rounded-full text-sm font-semibold">
+          #1 Bestseller
         </div>
-
-      </section>
+      </Hero>
 
       {/* Por que este livro é diferente */}
       <section className="py-20 lg:py-32">
@@ -715,13 +706,7 @@ export default function MetodoOOBALivroPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="container mx-auto px-4 md:px-6 text-center">
-          <h3 className="text-2xl font-bold mb-4">Celso Rocha de Abreu</h3>
-          <p className="text-gray-400 mb-6">Escritor, palestrante e criador do Método OOBA</p>
-          <p className="text-sm text-gray-500">© 2024 Celso Rocha de Abreu. Todos os direitos reservados.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

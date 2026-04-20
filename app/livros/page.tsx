@@ -7,7 +7,9 @@ import { Card, CardContent } from "@/components/ui/card"
 import { BookOpen, Star, ShoppingCart, Heart, Users, Feather, Mountain } from "@/components/icons"
 import Image from "next/image"
 import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
 import Link from "next/link"
+import { Hero } from "@/components/ui/hero"
 import { useEffect, useState } from "react"
 
 interface Book {
@@ -66,56 +68,39 @@ export default function LivrosPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#1d9b9a] to-[#16807f] text-white py-20 lg:py-32 pt-32 lg:pt-40">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                  <BookOpen className="w-6 h-6 text-white" />
-                </div>
-                <span className="text-white/90 font-semibold text-lg">Biblioteca OOBA</span>
-              </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                Livros que Transformam Vidas
-              </h1>
-              <p className="text-xl md:text-2xl mb-8 opacity-90 leading-relaxed">
-                Obras cuidadosamente escritas para guiar famílias em sua jornada de conexão, crescimento e descoberta
-                dos valores mais profundos da vida.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button
-                  size="lg"
-                  className="bg-white text-[#1d9b9a] hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-full"
-                >
-                  Ver Coleção Completa
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-white text-white hover:bg-white hover:text-[#1d9b9a] px-8 py-4 text-lg font-semibold rounded-full bg-transparent"
-                >
-                  Comprar Conjunto
-                </Button>
-              </div>
-            </div>
-            <div className="relative">
-              <Image
-                src="/images/livros.jpg"
-                alt="Coleção de livros de Celso Rocha"
-                width={600}
-                height={500}
-                className="rounded-2xl shadow-2xl"
-              />
-            </div>
-          </div>
-        </div>
-
-      </section>
+      <Hero
+        badgeIcon={<BookOpen className="w-6 h-6 text-white" />}
+        badgeText="Biblioteca OOBA"
+        title="Livros que Transformam Vidas"
+        description="Obras cuidadosamente escritas para guiar famílias em sua jornada de conexão, crescimento e descoberta dos valores mais profundos da vida."
+        buttons={
+          <>
+            <Button
+              size="lg"
+              className="bg-white text-[#1d9b9a] hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-full"
+            >
+              Ver Coleção Completa
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-white text-white hover:bg-white hover:text-[#1d9b9a] px-8 py-4 text-lg font-semibold rounded-full bg-transparent"
+            >
+              Comprar Conjunto
+            </Button>
+          </>
+        }
+        image={{
+          src: "/images/livros.jpg",
+          alt: "Coleção de livros de Celso Rocha",
+          width: 600,
+          height: 500,
+        }}
+      />
 
       {/* Estatísticas dos Livros */}
       <section className="py-20 lg:py-32">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <Card className="text-center p-8 border-0 shadow-lg">
               <CardContent className="p-0">
@@ -162,7 +147,7 @@ export default function LivrosPage() {
 
       {/* Livros Principais */}
       <section className="py-20 lg:py-32 bg-gray-50">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Nossa Coleção</h2>
             <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
@@ -242,7 +227,7 @@ export default function LivrosPage() {
 
       {/* Depoimentos dos Leitores */}
       <section className="py-20 lg:py-32">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">O que dizem os leitores</h2>
             <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
@@ -310,7 +295,7 @@ export default function LivrosPage() {
 
       {/* Onde Comprar */}
       <section className="py-20 lg:py-32 bg-gray-50">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Onde Comprar</h2>
             <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
@@ -376,7 +361,7 @@ export default function LivrosPage() {
 
       {/* Chamada para Ação */}
       <section className="py-20 lg:py-32 bg-gradient-to-br from-[#1d9b9a] to-[#16807f] text-white">
-        <div className="container mx-auto px-4 md:px-6 text-center">
+        <div className="container mx-auto px-4 md:px-6 text-center max-w-6xl">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">Comece sua jornada de transformação</h2>
           <p className="text-xl md:text-2xl mb-8 opacity-90 max-w-3xl mx-auto leading-relaxed">
             Escolha o livro que mais ressoa com seu momento atual e inicie uma jornada de descoberta, crescimento e
@@ -401,13 +386,7 @@ export default function LivrosPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="container mx-auto px-4 md:px-6 text-center">
-          <h3 className="text-2xl font-bold mb-4">Celso Rocha de Abreu</h3>
-          <p className="text-gray-400 mb-6">Escritor, palestrante e criador do Método OOBA</p>
-          <p className="text-sm text-gray-500">© 2024 Celso Rocha de Abreu. Todos os direitos reservados.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

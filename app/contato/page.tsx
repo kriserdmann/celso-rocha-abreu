@@ -23,6 +23,8 @@ import {
 } from "@/components/icons"
 import Image from "next/image"
 import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
+import { Hero } from "@/components/ui/hero"
 import { createClient } from "@/lib/supabase/client"
 import { toast } from "sonner"
 
@@ -97,54 +99,40 @@ export default function ContatoPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#1d9b9a] to-[#16807f] text-white py-20 lg:py-32 pt-32 lg:pt-40">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                  <MessageCircle className="w-6 h-6 text-white" />
-                </div>
-                <span className="text-white/90 font-semibold text-lg">Vamos Conversar</span>
-              </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">Entre em Contato</h1>
-              <p className="text-xl md:text-2xl mb-8 opacity-90 leading-relaxed">
-                Estou aqui para ajudar você a transformar sua família através do Método OOBA. Entre em contato para
-                agendar palestras, tirar dúvidas ou compartilhar sua jornada.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button
-                  size="lg"
-                  className="bg-white text-[#1d9b9a] hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-full"
-                >
-                  WhatsApp Direto
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-white text-white hover:bg-white hover:text-[#1d9b9a] px-8 py-4 text-lg font-semibold rounded-full bg-transparent"
-                >
-                  Agendar Reunião
-                </Button>
-              </div>
-            </div>
-            <div className="relative">
-              <Image
-                src="/images/celso-quem-sou-eu.jpg"
-                alt="Celso Rocha em seu escritório"
-                width={600}
-                height={500}
-                className="rounded-2xl shadow-2xl"
-              />
-            </div>
-          </div>
-        </div>
-
-      </section>
+      <Hero
+        badgeIcon={<MessageCircle className="w-6 h-6 text-white" />}
+        badgeText="Vamos Conversar"
+        title="Entre em Contato"
+        description="Estou aqui para ajudar você a transformar sua família através do Método OOBA. Entre em contato para agendar palestras, tirar dúvidas ou compartilhar sua jornada."
+        buttons={
+          <>
+            <Button
+              size="lg"
+              className="bg-white text-[#1d9b9a] hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-full"
+            >
+              WhatsApp Direto
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-white text-white hover:bg-white hover:text-[#1d9b9a] px-8 py-4 text-lg font-semibold rounded-full bg-transparent"
+            >
+              Agendar Reunião
+            </Button>
+          </>
+        }
+        image={{
+          src: "/images/celso-quem-sou-eu.jpg",
+          alt: "Celso Rocha em seu escritório",
+          width: 600,
+          height: 500,
+          className: "rounded-2xl shadow-2xl",
+        }}
+      />
 
       {/* Informações de Contato */}
       <section className="py-20 lg:py-32">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Como me encontrar</h2>
             <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
@@ -210,7 +198,7 @@ export default function ContatoPage() {
 
       {/* Formulário de Contato */}
       <section className="py-20 lg:py-32 bg-gray-50">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
             <div>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Envie sua mensagem</h2>
@@ -394,7 +382,7 @@ export default function ContatoPage() {
 
       {/* Tipos de Atendimento */}
       <section className="py-20 lg:py-32">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Como posso ajudar você</h2>
             <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
@@ -489,7 +477,7 @@ export default function ContatoPage() {
 
       {/* Horários de Atendimento */}
       <section className="py-20 lg:py-32 bg-gray-50">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Horários de Atendimento</h2>
@@ -563,7 +551,7 @@ export default function ContatoPage() {
 
       {/* Chamada para Ação */}
       <section className="py-20 lg:py-32 bg-gradient-to-br from-[#1d9b9a] to-[#16807f] text-white">
-        <div className="container mx-auto px-4 md:px-6 text-center">
+        <div className="container mx-auto px-4 md:px-6 text-center max-w-6xl">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">Vamos começar sua transformação?</h2>
           <p className="text-xl md:text-2xl mb-8 opacity-90 max-w-3xl mx-auto leading-relaxed">
             Não deixe para amanhã a oportunidade de fortalecer os laços com quem você mais ama. Entre em contato agora e
@@ -588,13 +576,7 @@ export default function ContatoPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="container mx-auto px-4 md:px-6 text-center">
-          <h3 className="text-2xl font-bold mb-4">Celso Rocha de Abreu</h3>
-          <p className="text-gray-400 mb-6">Escritor, palestrante e criador do Método OOBA</p>
-          <p className="text-sm text-gray-500">© 2024 Celso Rocha de Abreu. Todos os direitos reservados.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

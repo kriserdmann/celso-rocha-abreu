@@ -23,6 +23,8 @@ import {
 } from "lucide-react"
 import Image from "next/image"
 import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
+import { Hero } from "@/components/ui/hero"
 import { createClient } from "@/lib/supabase/client"
 import { toast } from "sonner"
 
@@ -143,66 +145,58 @@ export default function AgendarPalestraPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#1d9b9a] to-[#16807f] text-white py-20 lg:py-32 pt-32 lg:pt-40">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                  <Mic className="w-6 h-6 text-white" />
-                </div>
-                <span className="text-white/90 font-semibold text-lg">Palestras Transformadoras</span>
+      <Hero
+        badgeIcon={<Mic className="w-6 h-6 text-white" />}
+        badgeText="Palestras Transformadoras"
+        title="Agende uma Palestra"
+        description={
+          <>
+            Leve o poder transformador do Método OOBA para sua instituição
+            <br />
+            <br />
+            Mais de 500 palestras realizadas, 50.000+ pessoas impactadas e resultados comprovados em todo o Brasil
+          </>
+        }
+        buttons={
+          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 mb-8 w-full">
+            <div className="grid md:grid-cols-2 gap-4 text-sm w-full">
+              <div className="flex items-center gap-3">
+                <CheckCircle className="w-5 h-5 text-white" />
+                <span>Conteúdo personalizado</span>
               </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">Agende uma Palestra</h1>
-              <p className="text-xl md:text-2xl mb-6 opacity-90 leading-relaxed">
-                Leve o poder transformador do Método OOBA para sua instituição
-              </p>
-              <p className="text-lg md:text-xl mb-8 opacity-80 leading-relaxed">
-                Mais de 500 palestras realizadas, 50.000+ pessoas impactadas e resultados comprovados em todo o Brasil
-              </p>
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 mb-8">
-                <div className="grid md:grid-cols-2 gap-4 text-sm">
-                  <div className="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-white" />
-                    <span>Conteúdo personalizado</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-white" />
-                    <span>Presencial e online</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-white" />
-                    <span>Material de apoio incluso</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-white" />
-                    <span>Acompanhamento pós-evento</span>
-                  </div>
-                </div>
+              <div className="flex items-center gap-3">
+                <CheckCircle className="w-5 h-5 text-white" />
+                <span>Presencial e online</span>
               </div>
-            </div>
-            <div className="relative">
-              <Image
-                src="/placeholder.svg?height=500&width=600"
-                alt="Celso Rocha palestrando para uma audiência"
-                width={600}
-                height={500}
-                className="rounded-2xl shadow-2xl"
-              />
-              <div className="absolute -bottom-4 -left-4 bg-white text-[#1d9b9a] p-4 rounded-xl shadow-lg">
-                <div className="text-2xl font-bold">4.9/5</div>
-                <div className="text-sm">Avaliação média</div>
-                <div className="flex mt-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
+              <div className="flex items-center gap-3">
+                <CheckCircle className="w-5 h-5 text-white" />
+                <span>Material de apoio incluso</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <CheckCircle className="w-5 h-5 text-white" />
+                <span>Acompanhamento pós-evento</span>
               </div>
             </div>
           </div>
+        }
+        image={{
+          src: "/placeholder.svg?height=500&width=600",
+          alt: "Celso Rocha palestrando para uma audiência",
+          width: 600,
+          height: 500,
+          className: "rounded-2xl shadow-2xl",
+        }}
+      >
+        <div className="absolute -bottom-4 -left-4 bg-white text-[#1d9b9a] p-4 rounded-xl shadow-lg">
+          <div className="text-2xl font-bold">4.9/5</div>
+          <div className="text-sm">Avaliação média</div>
+          <div className="flex mt-1">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+            ))}
+          </div>
         </div>
-
-      </section>
+      </Hero>
 
       {/* Tipos de Instituições */}
       <section className="py-20 lg:py-32">
@@ -846,13 +840,7 @@ export default function AgendarPalestraPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="container mx-auto px-4 md:px-6 text-center">
-          <h3 className="text-2xl font-bold mb-4">Celso Rocha de Abreu</h3>
-          <p className="text-gray-400 mb-6">Escritor, palestrante e criador do Método OOBA</p>
-          <p className="text-sm text-gray-500">© 2024 Celso Rocha de Abreu. Todos os direitos reservados.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

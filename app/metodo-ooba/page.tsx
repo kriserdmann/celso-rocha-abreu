@@ -3,60 +3,48 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Heart, Ear, Clock, Users, Star, CheckCircle, ArrowRight, Target, Lightbulb } from "@/components/icons"
 import Image from "next/image"
 import { Header } from "@/components/header"
-
+import { Footer } from "@/components/footer"
+import { Hero } from "@/components/ui/hero"
 export default function MetodoOOBAPage() {
   return (
     <div className="min-h-screen bg-white">
       <Header />
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#1d9b9a] to-[#16807f] text-white py-20 lg:py-32 pt-32 lg:pt-40">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                  <Heart className="w-6 h-6 text-white" />
-                </div>
-                <span className="text-white/90 font-semibold text-lg">Método Revolucionário</span>
-              </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">O Método OOBA</h1>
-              <p className="text-xl md:text-2xl mb-8 opacity-90 leading-relaxed">
-                Uma abordagem transformadora que fortale vínculos familiares através de quatro atos fundamentais: olhar, ouvir, bendizer e abraçar.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button
-                  size="lg"
-                  className="bg-white text-[#1d9b9a] hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-full"
-                >
-                  Aplicar o Método
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-white text-white hover:bg-white hover:text-[#1d9b9a] px-8 py-4 text-lg font-semibold rounded-full bg-transparent"
-                >
-                  Agendar Palestra
-                </Button>
-              </div>
-            </div>
-            <div className="relative">
-              <Image
-                src="/images/ooba-capa.jpg"
-                alt="Família aplicando o Método OOBA"
-                width={600}
-                height={500}
-                className="rounded-2xl shadow-2xl object-cover"
-              />
-            </div>
-          </div>
-        </div>
-
-      </section>
+      <Hero
+        badgeIcon={<Heart className="w-6 h-6 text-white" />}
+        badgeText="Método Revolucionário"
+        title="O Método OOBA"
+        description="Uma abordagem transformadora que fortale vínculos familiares através de quatro atos fundamentais: olhar, ouvir, bendizer e abraçar."
+        buttons={
+          <>
+            <Button
+              size="lg"
+              className="bg-white text-[#1d9b9a] hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-full"
+            >
+              Aplicar o Método
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-white text-white hover:bg-white hover:text-[#1d9b9a] px-8 py-4 text-lg font-semibold rounded-full bg-transparent"
+            >
+              Agendar Palestra
+            </Button>
+          </>
+        }
+        image={{
+          src: "/images/ooba-capa.jpg",
+          alt: "Família aplicando o Método OOBA",
+          width: 600,
+          height: 500,
+          className: "object-cover",
+        }}
+      />
 
       {/* O que é o Método OOBA */}
       <section className="py-20 lg:py-32">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           <div className="max-w-4xl mx-auto text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">O que é o Método OOBA?</h2>
             <p className="text-lg md:text-xl text-gray-600 leading-relaxed mb-8">
@@ -124,7 +112,7 @@ export default function MetodoOOBAPage() {
 
       {/* Os 4 Atos Detalhados */}
       <section className="py-20 lg:py-32 bg-gray-50">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Os 4 atos do método OOBA </h2>
             <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
@@ -307,7 +295,7 @@ export default function MetodoOOBAPage() {
 
       {/* Como Funciona o Método */}
       <section className="py-20 lg:py-32">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Como Funciona na Prática</h2>
             <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
@@ -366,7 +354,7 @@ export default function MetodoOOBAPage() {
 
       {/* Benefícios e Resultados */}
       <section className="py-20 lg:py-32 bg-gray-50">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Benefícios Comprovados</h2>
             <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
@@ -442,7 +430,7 @@ export default function MetodoOOBAPage() {
 
       {/* Depoimentos Específicos */}
       <section className="py-20 lg:py-32">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
               Famílias Transformadas pelo OOBA
@@ -494,7 +482,7 @@ export default function MetodoOOBAPage() {
 
       {/* Chamada para Ação */}
       <section className="py-20 lg:py-32 bg-gradient-to-br from-[#1d9b9a] to-[#16807f] text-white">
-        <div className="container mx-auto px-4 md:px-6 text-center">
+        <div className="container mx-auto px-4 md:px-6 text-center max-w-6xl">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">Pronto para transformar sua família?</h2>
           <p className="text-xl md:text-2xl mb-8 opacity-90 max-w-3xl mx-auto leading-relaxed">
             Comece hoje mesmo a aplicar o Método OOBA e veja sua família se transformar através do amor, comunicação e
@@ -519,13 +507,7 @@ export default function MetodoOOBAPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="container mx-auto px-4 md:px-6 text-center">
-          <h3 className="text-2xl font-bold mb-4">Celso Rocha de Abreu</h3>
-          <p className="text-gray-400 mb-6">Escritor, palestrante e criador do Método OOBA</p>
-          <p className="text-sm text-gray-500">© 2024 Celso Rocha de Abreu. Todos os direitos reservados.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

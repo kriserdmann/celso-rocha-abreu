@@ -15,6 +15,7 @@ export function Header() {
   }
 
   const navLinks = [
+    { href: "/", label: "Home" },
     { href: "/quem-sou", label: "Quem Sou" },
     { href: "/metodo-ooba", label: "Método OOBA" },
     { href: "/palestras", label: "Palestras" },

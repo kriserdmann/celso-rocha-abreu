@@ -7,8 +7,10 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Mic, Users, Clock, MapPin, Video, Star, CheckCircle, Calendar, Award, Target, Heart } from "@/components/icons"
 import Image from "next/image"
 import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
 import { createClient } from "@/lib/supabase/client"
 import Link from "next/link"
+import { Hero } from "@/components/ui/hero"
 
 interface Lecture {
   id: string
@@ -54,59 +56,44 @@ export default function PalestrasPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#1d9b9a] to-[#16807f] text-white py-20 lg:py-32 pt-32 lg:pt-40">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                  <Mic className="w-6 h-6 text-white" />
-                </div>
-                <span className="text-white/90 font-semibold text-lg">Palestras Transformadoras</span>
-              </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">Inspire sua Comunidade</h1>
-              <p className="text-xl md:text-2xl mb-8 opacity-90 leading-relaxed">
-                Palestras que tocam o coração e transformam relacionamentos familiares. Conteúdo prático, inspirador e
-                adaptado para cada público.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/agendar-palestra">
-                  <Button
-                    size="lg"
-                    className="bg-white text-[#1d9b9a] hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-full w-full sm:w-auto"
-                  >
-                    Agendar Palestra
-                  </Button>
-                </Link>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-white text-white hover:bg-white hover:text-[#1d9b9a] px-8 py-4 text-lg font-semibold rounded-full bg-transparent"
-                  onClick={() => {
-                    document.getElementById('temas')?.scrollIntoView({ behavior: 'smooth' })
-                  }}
-                >
-                  Ver Temas
-                </Button>
-              </div>
-            </div>
-            <div className="relative">
-              <Image
-                src="/images/palestra-celso.jpg"
-                alt="Celso Rocha palestrando para uma audiência"
-                width={600}
-                height={500}
-                className="rounded-2xl shadow-2xl"
-              />
-            </div>
-          </div>
-        </div>
-
-      </section>
+      <Hero
+        badgeIcon={<Mic className="w-6 h-6 text-white" />}
+        badgeText="Palestras Transformadoras"
+        title="Inspire sua Comunidade"
+        description="Palestras que tocam o coração e transformam relacionamentos familiares. Conteúdo prático, inspirador e adaptado para cada público."
+        buttons={
+          <>
+            <Link href="/agendar-palestra">
+              <Button
+                size="lg"
+                className="bg-white text-[#1d9b9a] hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-full w-full sm:w-auto"
+              >
+                Agendar Palestra
+              </Button>
+            </Link>
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-white text-white hover:bg-white hover:text-[#1d9b9a] px-8 py-4 text-lg font-semibold rounded-full bg-transparent"
+              onClick={() => {
+                document.getElementById('temas')?.scrollIntoView({ behavior: 'smooth' })
+              }}
+            >
+              Ver Temas
+            </Button>
+          </>
+        }
+        image={{
+          src: "/images/palestra-celso.jpg",
+          alt: "Celso Rocha palestrando para uma audiência",
+          width: 600,
+          height: 500,
+        }}
+      />
 
       {/* Números e Impacto */}
       <section className="py-20 lg:py-32">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Impacto Comprovado</h2>
             <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
@@ -160,7 +147,7 @@ export default function PalestrasPage() {
 
       {/* Tipos de Palestras */}
       <section className="py-20 lg:py-32 bg-gray-50">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Tipos de Palestras</h2>
             <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
@@ -330,7 +317,7 @@ export default function PalestrasPage() {
 
       {/* Temas Principais */}
       <section id="temas" className="py-20 lg:py-32">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Temas Principais</h2>
             <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
@@ -377,7 +364,7 @@ export default function PalestrasPage() {
 
       {/* Formato das Palestras */}
       <section className="py-20 lg:py-32 bg-gray-50">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Formato das Palestras</h2>
             <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
@@ -438,7 +425,7 @@ export default function PalestrasPage() {
 
       {/* Depoimentos de Palestras */}
       <section className="py-20 lg:py-32">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
               O que dizem sobre as palestras
@@ -508,7 +495,7 @@ export default function PalestrasPage() {
 
       {/* Como Contratar */}
       <section className="py-20 lg:py-32 bg-gray-50">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Como Contratar</h2>
             <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
@@ -562,7 +549,7 @@ export default function PalestrasPage() {
 
       {/* Chamada para Ação */}
       <section className="py-20 lg:py-32 bg-gradient-to-br from-[#1d9b9a] to-[#16807f] text-white">
-        <div className="container mx-auto px-4 md:px-6 text-center">
+        <div className="container mx-auto px-4 md:px-6 text-center max-w-6xl">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">Pronto para transformar vidas?</h2>
           <p className="text-xl md:text-2xl mb-8 opacity-90 max-w-3xl mx-auto leading-relaxed">
             Leve uma palestra transformadora para sua comunidade. Entre em contato e vamos juntos impactar vidas através
@@ -589,13 +576,7 @@ export default function PalestrasPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="container mx-auto px-4 md:px-6 text-center">
-          <h3 className="text-2xl font-bold mb-4">Celso Rocha de Abreu</h3>
-          <p className="text-gray-400 mb-6">Escritor, palestrante e criador do Método OOBA</p>
-          <p className="text-sm text-gray-500">© 2024 Celso Rocha de Abreu. Todos os direitos reservados.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

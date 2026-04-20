@@ -3,6 +3,8 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Heart, BookOpen, Mic, Users, Award, Clock } from "@/components/icons"
 import Image from "next/image"
 import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
+import { Hero } from "@/components/ui/hero"
 
 export default function QuemSouPage() {
   return (
@@ -10,47 +12,37 @@ export default function QuemSouPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#1d9b9a] to-[#16807f] text-white py-20 lg:py-32 pt-32 lg:pt-40">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">Celso Rocha de Abreu</h1>
-              <p className="text-xl md:text-2xl mb-8 opacity-90 leading-relaxed">
-                Cristão, esposo, pai, escritor, palestrante e educador familiar,  dedicado a transformar relacionamentos e fortalecer os vínculos familiares através do amor e da compreensão.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button
-                  size="lg"
-                  className="bg-white text-[#1d9b9a] hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-full"
-                >
-                  Conheça o Método OOBA
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-white text-white hover:bg-white hover:text-[#1d9b9a] px-8 py-4 text-lg font-semibold rounded-full bg-transparent"
-                >
-                  Agende uma Palestra
-                </Button>
-              </div>
-            </div>
-            <div className="relative">
-              <Image
-                src="/images/celso-quem-sou-eu.jpg"
-                alt="Celso Rocha de Abreu"
-                width={500}
-                height={600}
-                className="rounded-2xl shadow-2xl"
-              />
-            </div>
-          </div>
-        </div>
-
-      </section>
+      <Hero
+        title="Celso Rocha de Abreu"
+        description="Cristão, esposo, pai, escritor, palestrante e educador familiar,  dedicado a transformar relacionamentos e fortalecer os vínculos familiares através do amor e da compreensão."
+        buttons={
+          <>
+            <Button
+              size="lg"
+              className="bg-white text-[#1d9b9a] hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-full"
+            >
+              Conheça o Método OOBA
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-white text-white hover:bg-white hover:text-[#1d9b9a] px-8 py-4 text-lg font-semibold rounded-full bg-transparent"
+            >
+              Agende uma Palestra
+            </Button>
+          </>
+        }
+        image={{
+          src: "/images/celso-quem-sou-eu.jpg",
+          alt: "Celso Rocha de Abreu",
+          width: 500,
+          height: 600,
+        }}
+      />
 
       {/* Minha História */}
       <section className="py-20 lg:py-32">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Minha História</h2>
@@ -84,7 +76,7 @@ export default function QuemSouPage() {
 
       {/* Conquistas e Números */}
       <section className="py-20 lg:py-32 bg-gray-50">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Impacto e Conquistas</h2>
             <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
@@ -138,7 +130,7 @@ export default function QuemSouPage() {
 
       {/* Missão e Valores */}
       <section className="py-20 lg:py-32">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-8">Missão e Valores</h2>
@@ -200,7 +192,7 @@ export default function QuemSouPage() {
 
       {/* Formação e Experiência */}
       <section className="py-20 lg:py-32 bg-gray-50">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Formação e Experiência</h2>
@@ -254,7 +246,7 @@ export default function QuemSouPage() {
 
       {/* Chamada para Ação */}
       <section className="py-20 lg:py-32 bg-gradient-to-br from-[#1d9b9a] to-[#16807f] text-white">
-        <div className="container mx-auto px-4 md:px-6 text-center">
+        <div className="container mx-auto px-4 md:px-6 max-w-6xl text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">Vamos transformar sua família juntos?</h2>
           <p className="text-xl md:text-2xl mb-8 opacity-90 max-w-3xl mx-auto leading-relaxed">
             Estou aqui para ajudar você a construir relacionamentos mais profundos e duradouros com quem você mais ama.
@@ -278,13 +270,7 @@ export default function QuemSouPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="container mx-auto px-4 md:px-6 text-center">
-          <h3 className="text-2xl font-bold mb-4">Celso Rocha de Abreu</h3>
-          <p className="text-gray-400 mb-6">Escritor, palestrante e criador do Método OOBA</p>
-          <p className="text-sm text-gray-500">© 2024 Celso Rocha de Abreu. Todos os direitos reservados.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }
